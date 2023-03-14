@@ -19,7 +19,7 @@ def sobre():
 def contato():
   return menu + "Aqui vai o conteúdo da página Contato"
 
-@app.route("/Notícias")
+@app.route("/noticias")
 def noticias():
   return menu + "Confira as últimas notícias"
 
