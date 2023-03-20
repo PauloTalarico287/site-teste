@@ -3,7 +3,7 @@ from flask import Flask
 app = Flask(__name__)
 
 menu = """
-<a href="/">Página Inicial</a> | <a href="/sobre">Sobre</a> | <a href="/contato">Contato</a> | <a href="/noticias">Notícias</a>
+<a href="/">Página Inicial</a> | <a href="/sobre">Sobre</a> | <a href="/contato">Contato</a> | <a href="/promocoes">Promoções</a>
 <br>
 """
 
@@ -19,7 +19,19 @@ def sobre():
 def contato():
   return menu + "Aqui vai o conteúdo da página Contato"
 
-@app.route("/noticias")
-def noticias():
-  return menu + "Confira as últimas notícias"
-
+@app.route("/promocoes")
+def promocoes():
+  conteudo = menu + """
+  Encontrei as seguintes promoções no <a href="https://t.me/promocoeseachadinhos">@promocoeseachadinhos</a>:
+  <br>
+  <ul>
+  """
+  scraper = ChannelScraper()
+  contador = 0
+  for message in scraper.messages("promocoeseachadinhos"):
+    contador += 1
+    texto = message.text.strip().splitlines()[0]
+    conteudo += f"<li>{message.created_at} {texto}</li>"
+    if contador == 10:
+      break
+  return conteudo + "</ul>"
