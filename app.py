@@ -45,4 +45,4 @@ def promocoes():
     conteudo += f"<li>{message.created_at} {texto}</li>"
     if contador == 10:
       break
-  return conteudo + "</ul>
+  return conteudo + "</ul>"
