@@ -3,8 +3,8 @@ import os
 from flask import Flask
 from tchan import ChannelScraper
 
-TELEGRAM_ADMIN_ID = os.environ["TELEGRAM_ADMIN_ID"]
 TELEGRAM_API_KEY = os.environ["TELEGRAM_API_KEY"]
+TELEGRAM_ADMIN_ID = os.environ["TELEGRAM_ADMIN_ID"]
 app = Flask(__name__)
 
 menu = """
@@ -37,6 +37,12 @@ def promocoes():
   <br>
   <ul>
   """
-  for promocao in ultimas_promocoes():
-    conteudo += f"<li>{promocao}</li>"
-  return conteudo + "</ul>"
+  scraper = ChannelScraper()
+  contador = 0
+  for message in scraper.messages("promocoeseachadinhos"):
+    contador += 1
+    texto = message.text.strip().splitlines()[0]
+    conteudo += f"<li>{message.created_at} {texto}</li>"
+    if contador == 10:
+      break
+  return conteudo + "</ul>
