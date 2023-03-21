@@ -1,5 +1,10 @@
+import requests
+import os
 from flask import Flask
+from tchan import ChannelScraper
 
+TELEGRAM_ADMIN_ID = os.environ["TELEGRAM_ADMIN_ID"]
+TELEGRAM_API_KEY = os.environ["TELEGRAM_API_KEY"]
 app = Flask(__name__)
 
 menu = """
@@ -10,6 +15,11 @@ menu = """
 @app.route("/")
 def hello_world():
   return menu + "Olá, mundo! Esse é meu site. (Paulo Talarico)"
+
+@app.route("/dedoduro")
+def dedoduro():
+  mensagem={'chat_id':TELEGRAM_ADMNIN_ID, 'text': 'Alguém acessou a página dedo duro'}
+  requests.post(f'https://api.telegram.org/bot{TELEGRAM_API_KEY}/sendMesssage', data=mensagem)  
 
 @app.route("/sobre")
 def sobre():
