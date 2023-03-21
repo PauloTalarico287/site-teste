@@ -18,8 +18,9 @@ def hello_world():
 
 @app.route("/dedoduro")
 def dedoduro():
-  mensagem={'chat_id':TELEGRAM_ADMNIN_ID, 'text': 'Alguém acessou a página dedo duro'}
-  requests.post(f'https://api.telegram.org/bot{TELEGRAM_API_KEY}/sendMesssage', data=mensagem)  
+  mensagem = {"chat_id": TELEGRAM_ADMIN_ID, "text": "Alguém acessou a página dedo duro!"}
+  requests.post(f"https://api.telegram.org/bot{TELEGRAM_API_KEY}/sendMessage", data=mensagem)
+  return "Mensagem enviada."
 
 @app.route("/sobre")
 def sobre():
