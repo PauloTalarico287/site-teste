@@ -1,10 +1,20 @@
+import gspread
 import requests
 import os
 from flask import Flask
+from oauth2client.service_account import ServiceAccountCredentials
 from tchan import ChannelScraper
 
 TELEGRAM_API_KEY = os.environ["TELEGRAM_API_KEY"]
 TELEGRAM_ADMIN_ID = os.environ["TELEGRAM_ADMIN_ID"]
+GOOGLE_SHEETS_CREDENTIALS = os.environ["GOOGLE_SHEETS_CREDENTIALS"]
+with open("credenciais.json", mode="w") as fobj:
+  fobj.write(GOOGLE_SHEETS_CREDENTIALS)
+conta = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
+api = gspread.authorize(conta) # sheets.new
+planilha = api.open_by_key("1ZDyxhXlCtCjMbyKvYmMt_8jAKN5JSoZ7x3MqlnoyzAM")
+sheet = planilha.worksheet("Sheet1")
+
 app = Flask(__name__)
 
 menu = """
@@ -46,3 +56,10 @@ def promocoes():
     if contador == 10:
       break
   return conteudo + "</ul>"
+
+@app.route("/dedoduro2")
+def dedoduro2():
+  sheet.append_row(["Paulo", "Talarico", "a partir do Flasck"])
+  return "Planilha escrita!"
+
+/
