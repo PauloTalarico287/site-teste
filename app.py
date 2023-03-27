@@ -61,5 +61,3 @@ def promocoes():
 def dedoduro2():
   sheet.append_row(["Paulo", "Talarico", "a partir do Flasck"])
   return "Planilha escrita!"
-
-/
