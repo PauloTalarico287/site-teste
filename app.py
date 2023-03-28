@@ -12,8 +12,10 @@ with open("credenciais.json", mode="w") as fobj:
   fobj.write(GOOGLE_SHEETS_CREDENTIALS)
 conta = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
 api = gspread.authorize(conta) # sheets.new
-planilha = api.open_by_key("1ZDyxhXlCtCjMbyKvYmMt_8jAKN5JSoZ7x3MqlnoyzAM")
-sheet = planilha.worksheet("Sheet1")
+planilha = api.open_by_key("1Bk0tYfWtQCWZBlWxUtfXcca9iP5NuTXEI1mg_JC3JUo")
+sheet = planilha.worksheet("Página1")
+sheet2= planilha.worksheet("Página2")
+sheet3= planilha.worksheet("Página3")
 
 app = Flask(__name__)
 
@@ -151,3 +153,34 @@ def telegram_bot():
   nova_mensagem = {"chat_id": chat_id, "text": texto_resposta}
   requests.post(f"https://api.telegram.org./bot{TELEGRAM_API_KEY}/sendMessage", data=nova_mensagem)
   return "ok"
+
+@app.route("/telegram-recebe-dados", methods=['POST'])
+def recebe_dados():
+  dados = resposta.json()["result"]  
+  print(f"Temos {len(dados)} novas atualizações:")
+  for update in dados:
+    mensagens = []
+    update_id = update["update_id"]
+    if update_id in updates_processados:
+      print(f"Update {update_id} já foi processado.")
+      continue
+
+  first_name = update["message"]["from"]["first_name"]
+  sender_id = update["message"]["from"]["id"]
+  if "text" not in update["message"]:
+    continue  # Essa mensagem não é um texto!
+  message = update["message"]["text"]
+  chat_id = update["message"]["chat"]["id"]
+  datahora = str(datetime.datetime.fromtimestamp(update["message"]["date"]))
+  if "username" in update["message"]["from"]:
+    username = f' @{update["message"]["from"]["username"]}'
+  else:
+    username = "Não definido"
+    print(f"[{datahora}] Nova mensagem de {first_name} @{username} ({chat_id}): {message}")
+    mensagens.append([datahora, "recebida", username, first_name, chat_id, message])
+  requests.post(f"https://api.telegram.org./bot{token}/sendMessage", data=nova_mensagem)
+    mensagens.append([datahora, "enviada", username, first_name, chat_id, texto_resposta])
+    updates_processados.append(update_id)
+    sheet.update("A1", update_id)
+    sheet2.append_row([datahora, first_name, username, sender_id, message])  
+    sheet3.append_rows(mensagens)
