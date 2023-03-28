@@ -145,7 +145,7 @@ def telegram_bot():
   elif message == "32":
     texto_resposta ='A Subprefeitura Vila Mariana gastou R$ 50.278.531,66 em serviços públicos ao longo de 2022. O valor corresponde a 112.90% do planejado para o ano, quando o orçamento previsto era de R$ 44.534.373,00. Se quiser saber de outra região digite o número correspondente à subprefeitura. Se não, obrigado por ter consultado o Orçamendômetro.'
   else:
-    texto_resposta = "Não entendi! Para outras informações sobre a cidade de São Paulo, acesse o site da Agência Mural: agenciamural.org.br"
+    texto_resposta = "Não entendi! Os dados completos desta reportagem você pode conferir aqui: https://www.agenciamural.org.br/especiais/maioria-das-subprefeituras-de-sao-paulo-nao-cumpriu-orcamento-de-2022/ \nPara outras informações sobre a cidade de São Paulo, acesse o site da Agência Mural: agenciamural.org.br"
   nova_mensagem = {"chat_id": chat_id, "text": texto_resposta}
   requests.post(f"https://api.telegram.org./bot{TELEGRAM_API_KEY}/sendMessage", data=nova_mensagem)
   return "ok"
