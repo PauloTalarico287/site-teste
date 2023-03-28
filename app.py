@@ -178,7 +178,7 @@ def recebe_dados():
     username = "Não definido"
     print(f"[{datahora}] Nova mensagem de {first_name} @{username} ({chat_id}): {message}")
     mensagens.append([datahora, "recebida", username, first_name, chat_id, message])
-  requests.post(f"https://api.telegram.org./bot{token}/sendMessage", data=nova_mensagem)
+  requests.post(f"https://api.telegram.org./bot{TELEGRAM_API_KEY})
     mensagens.append([datahora, "enviada", username, first_name, chat_id, texto_resposta])
     updates_processados.append(update_id)
     sheet.update("A1", update_id)
