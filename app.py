@@ -76,7 +76,7 @@ def dedoduro2():
 @app.route("/telegram-bot", methods=['POST'])
 def telegram_bot():
   resposta = requests.get(f"https://api.telegram.org/bot{TELEGRAM_API_KEY}/getUpdates")
-  dados = resposta.json()["result"]  
+  dados = resposta.json()
   for update in dados:
     mensagens = []
     update_id = update["update_id"]
