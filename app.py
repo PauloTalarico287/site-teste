@@ -75,6 +75,26 @@ def dedoduro2():
   
 @app.route("/telegram-bot", methods=['POST'])
 def telegram_bot():
+  dados = resposta.json()["result"]  
+  for update in dados:
+    mensagens = []
+    update_id = update["update_id"]
+    if update_id in updates_processados:
+      continue
+    
+    first_name = update["message"]["from"]["first_name"]
+    sender_id = update["message"]["from"]["id"]
+    if "text" not in update["message"]:
+      continue  # Essa mensagem não é um texto!
+    message = update["message"]["text"]
+    chat_id = update["message"]["chat"]["id"]
+    datahora = str(datetime.datetime.fromtimestamp(update["message"]["date"]))
+    if "username" in update["message"]["from"]:
+      username = f' @{update["message"]["from"]["username"]}'
+    else:
+      username = "Não definido"
+      #mensagens.append([datahora, "recebida", username, first_name, chat_id, message])
+    
   update = request.json
   message = update["message"]["text"]
   chat_id = update["message"]["chat"]["id"]
@@ -152,4 +172,9 @@ def telegram_bot():
     texto_resposta = "Não entendi! Para outras informações sobre a cidade de São Paulo, acesse o site da Agência Mural: agenciamural.org.br"
   nova_mensagem = {"chat_id": chat_id, "text": texto_resposta}
   requests.post(f"https://api.telegram.org./bot{TELEGRAM_API_KEY}/sendMessage", data=nova_mensagem)
+  mensagens.append([datahora, "enviada", username, first_name, chat_id, texto_resposta])
+  updates_processados.append(update_id)
+  sheet.update("A1", update_id)
+  sheet2.append_row([datahora, first_name, username, sender_id, message])  
+  sheet3.append_rows(mensagens)
   return "ok"
