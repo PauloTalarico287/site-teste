@@ -174,5 +174,5 @@ def mural():
       Publicações.append([Autor_e_Data, Título, Linha_Fina, URL])
       df=pd.DataFrame(Publicações, columns=['Autor_e_Data', 'Título', 'Linha_Fina', 'URL'])
       sheet_novo.append_rows(Publicações)
-    else:
-      break
+      return "Atualizado"
+   
