@@ -17,6 +17,9 @@ sheet = planilha.worksheet("Página1")
 sheet2= planilha.worksheet("Página2")
 sheet3= planilha.worksheet("Página3")
 
+planilha2=api.open_by_key("1cmT3CmymxcIDi2dxHa8nuI-S7d-AUYbd9C7-gcQ7YhY")
+sheet_novo = planilha.worksheet("Página1")
+
 app = Flask(__name__)
 
 menu = """
@@ -79,7 +82,7 @@ def telegram_bot():
   message = update["message"]["text"]
   chat_id = update["message"]["chat"]["id"]
   if message == "/start":
-    texto_resposta = "Olá! Seja bem-vinda(o) ao Orçamendômetro SP, produzido pela Agência Mural.\nAqui você poderá saber quanto a Prefeitura de São Paulo investiu na sua região. Digite o número da subprefeitura que gostaria de saber a execução orçamentária:\n0) Toda a cidade, 1) Aricanduva/Formosa/Carrão,\n2) Butantã,\n3) Campo Limpo,\n4) Capela do Socorro,\n5) Casa Verde/Cachoeirinha,\n6) Cidade Ademar,\n7) Cidade Tiradentes,\n8) Guaianases,\n9) Vila Prudente,\n10) Ermelino Matarazzo,\n11) Freguesia/Brasilândia,\n12) Ipiranga,\n13) Itaim Paulista,\n14) Itaquera,\n15) Jabaquara,\n16) Jaçanã/Tremembé,\n17) Lapa,\n18) M'Boi Mirim,\n19) Mooca,\n20) Parelheiros,\n21) Penha,\n22) Perus/Anhanguera,\n23) Pinheiros,\n24) Pirituba/Jaraguá,\n25) Santana/Tucuruvi,\n26) Santo Amaro,\n27) São Mateus,\n28) São Miguel Paulista,\n29) Sapopemba,\n30) Sé,\n31) Vila Maria/Vila Guilherme,\n32) Vila Mariana."
+    texto_resposta = "Olá! Seja bem-vinda(o) ao Orçamendômetro SP, produzido pela Agência Mural.\nAqui você poderá saber quanto a Prefeitura de São Paulo investiu na sua região. Digite o número da subprefeitura que gostaria de saber a execução orçamentária:\n0) Toda a cidade, \n1) Aricanduva/Formosa/Carrão,\n2) Butantã,\n3) Campo Limpo,\n4) Capela do Socorro,\n5) Casa Verde/Cachoeirinha,\n6) Cidade Ademar,\n7) Cidade Tiradentes,\n8) Guaianases,\n9) Vila Prudente,\n10) Ermelino Matarazzo,\n11) Freguesia/Brasilândia,\n12) Ipiranga,\n13) Itaim Paulista,\n14) Itaquera,\n15) Jabaquara,\n16) Jaçanã/Tremembé,\n17) Lapa,\n18) M'Boi Mirim,\n19) Mooca,\n20) Parelheiros,\n21) Penha,\n22) Perus/Anhanguera,\n23) Pinheiros,\n24) Pirituba/Jaraguá,\n25) Santana/Tucuruvi,\n26) Santo Amaro,\n27) São Mateus,\n28) São Miguel Paulista,\n29) Sapopemba,\n30) Sé,\n31) Vila Maria/Vila Guilherme,\n32) Vila Mariana."
   elif message == "Olá":
     texto_resposta = "Olá! Seja bem-vinda(o) ao Orçamendômetro SP, produzido pela Agência Mural.\nAqui você poderá saber quanto a Prefeitura de São Paulo investiu na sua região. Digite o número da subprefeitura que gostaria de saber a execução orçamentária:\n1) Aricanduva/Formosa/Carrão,\n2) Butantã,\n3) Campo Limpo,\n4) Capela do Socorro,\n5) Casa Verde/Cachoeirinha,\n6) Cidade Ademar,\n7) Cidade Tiradentes,\n8) Guaianases,\n9) Vila Prudente,\n10) Ermelino Matarazzo,\n11) Freguesia/Brasilândia,\n12) Ipiranga,\n13) Itaim Paulista,\n14) Itaquera,\n15) Jabaquara,\n16) Jaçanã/Tremembé,\n17) Lapa,\n18) M'Boi Mirim,\n19) Mooca,\n20) Parelheiros,\n21) Penha,\n22) Perus/Anhanguera,\n23) Pinheiros,\n24) Pirituba/Jaraguá,\n25) Santana/Tucuruvi,\n26) Santo Amaro,\n27) São Mateus,\n28) São Miguel Paulista,\n29) Sapopemba,\n30) Sé,\n31) Vila Maria/Vila Guilherme,\n32) Vila Mariana,\n0)Reportagem completa."
   elif message == "1":
@@ -153,3 +156,23 @@ def telegram_bot():
   nova_mensagem = {"chat_id": chat_id, "text": texto_resposta}
   requests.post(f"https://api.telegram.org./bot{TELEGRAM_API_KEY}/sendMessage", data=nova_mensagem)
   return "ok"
+
+@app.route("/mural")
+def mural():
+  link='https://www.agenciamural.org.br/noticias/'
+  requisicao=requests.get(link)
+  html=BeautifulSoup(requisicao.content)
+  noticias=html.find_all('div',{'class':'texto mt-1'})
+  for link in noticias:
+  Publicações = []
+  Autor_e_Data= link.find('span',{'class':'detalhes mt-1 d-block'}).text
+  Título = link.find('h2',{"class":"m-0 mt-1"}).text
+  Linha_Fina = link.find('p',{"class":"linha-fina m-0 mt-1"}).text
+  URL=link.find('a').get('href')
+  valores = sheet.col_values(4)
+  if URL not in valores:
+    Publicações.append([Autor_e_Data, Título, Linha_Fina, URL])
+    df=pd.DataFrame(Publicações, columns=['Autor_e_Data', 'Título', 'Linha_Fina', 'URL'])
+    sheet_novo.append_rows(Publicações)
+  else:
+    break
