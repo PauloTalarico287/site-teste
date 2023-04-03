@@ -83,6 +83,29 @@ def dedoduro2():
   
 @app.route("/telegram-bot", methods=['POST'])
 def telegram_bot():
+  dados = resposta.json()["result"]  
+  print(f"Temos {len(dados)} novas atualizações:")
+  for update in dados:
+    mensagens = []
+    update_id = update["update_id"]
+    if update_id in updates_processados:
+      print(f"Update {update_id} já foi processado.")
+      continue
+
+    first_name = update["message"]["from"]["first_name"]
+    sender_id = update["message"]["from"]["id"]
+    if "text" not in update["message"]:
+      continue  # Essa mensagem não é um texto!
+    message = update["message"]["text"]
+    chat_id = update["message"]["chat"]["id"]
+    datahora = str(datetime.datetime.fromtimestamp(update["message"]["date"]))
+    if "username" in update["message"]["from"]:
+      username = f' @{update["message"]["from"]["username"]}'
+    else:
+      username = "Não definido"
+    print(f"[{datahora}] Nova mensagem de {first_name} @{username} ({chat_id}): {message}")
+    mensagens.append([datahora, "recebida", username, first_name, chat_id, message])
+  
   update = request.json
   message = update["message"]["text"]
   chat_id = update["message"]["chat"]["id"]
@@ -160,6 +183,11 @@ def telegram_bot():
     texto_resposta = "Não entendi! Para outras informações sobre a cidade de São Paulo, acesse o site da Agência Mural: agenciamural.org.br"
   nova_mensagem = {"chat_id": chat_id, "text": texto_resposta}
   requests.post(f"https://api.telegram.org./bot{TELEGRAM_API_KEY}/sendMessage", data=nova_mensagem)
+  mensagens.append([datahora, "enviada", username, first_name, chat_id, texto_resposta])
+  updates_processados.append(update_id)
+  sheet.update("A1", update_id)
+  sheet2.append_row([datahora, first_name, username, sender_id, message])  
+  sheet3.append_rows(mensagens)
   return "ok"
 
 @app.route("/mural")
@@ -184,7 +212,7 @@ def mural():
       return "Já atualizamos as últimas notícias"
     
 @app.route("/leis")
-def coleta(nome_cidade):
+def coleta():
   osasco='https://leismunicipais.com.br/legislacao-municipal/5123/leis-de-osasco/?q='
   guarulhos='https://leismunicipais.com.br/legislacao-municipal/4862/leis-de-guarulhos?q='
   sao_bernardo='https://leismunicipais.com.br/legislacao-municipal/5280/leis-de-sao-bernardo-do-campo?q='
@@ -197,7 +225,7 @@ def coleta(nome_cidade):
   cotia='https://leismunicipais.com.br/legislacao-municipal/4880/leis-de-cotia?q='
   cidades=[osasco, guarulhos, sao_bernardo, carapicuiba, taboao_da_serra, cotia, itaquaquecetuba, suzano, barueri, diadema]
     
-  requisicao=requests.get(nome_cidade)
+  requisicao=requests.get(cidades)
   html=BeautifulSoup(requisicao.content)
   leis = html.find_all('li',{'class':'item item-result index-leismunicipais'})
   Cidade=html.find('title').text
@@ -217,7 +245,4 @@ def coleta(nome_cidade):
   if novos_links:
     novos_dados = df[df['Link'].isin(novos_links)]
     sheet_leis.append_rows(novos_dados.values.tolist())
-  
-  for cidade in cidades:
-    coleta(cidade)
     return "ok"
