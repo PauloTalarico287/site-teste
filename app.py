@@ -20,7 +20,7 @@ sheet2= planilha.worksheet("Página2")
 sheet3= planilha.worksheet("Página3")
 
 planilha2=api.open_by_key("1cmT3CmymxcIDi2dxHa8nuI-S7d-AUYbd9C7-gcQ7YhY")
-sheet_novo = planilha.worksheet("Página1")
+sheet_novo = planilha2.worksheet("Página1")
 
 app = Flask(__name__)
 
