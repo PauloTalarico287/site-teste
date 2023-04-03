@@ -219,5 +219,5 @@ def coleta(nome_cidade):
     sheet_leis.append_rows(novos_dados.values.tolist())
   
   for cidade in cidades:
-  coleta(cidade)
-  return "ok"
+    coleta(cidade)
+    return "ok"
