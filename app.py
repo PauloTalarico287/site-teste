@@ -171,7 +171,7 @@ def mural():
     Título = link.find('h2',{"class":"m-0 mt-1"}).text
     Linha_Fina = link.find('p',{"class":"linha-fina m-0 mt-1"}).text
     URL=link.find('a').get('href')
-    valores = sheet.col_values(4)
+    valores = sheet_novo.col_values(4)
     if URL not in valores:
       Publicacoes.append([Autor_e_Data, Título, Linha_Fina, URL])
       df=pd.DataFrame(Publicacoes, columns=['Autor_e_Data', 'Título', 'Linha_Fina', 'URL'])
