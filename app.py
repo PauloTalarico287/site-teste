@@ -22,7 +22,7 @@ sheet3= planilha.worksheet("Página3")
 planilha2=api.open_by_key("1cmT3CmymxcIDi2dxHa8nuI-S7d-AUYbd9C7-gcQ7YhY")
 sheet_novo = planilha2.worksheet("Página1")
 
-planilha3=api.open_by("1HFKm-eINHeoCkYnqsKsc1elEuSRKIh9Q8MoJbkySES4")
+planilha3=api.open_by_key("1HFKm-eINHeoCkYnqsKsc1elEuSRKIh9Q8MoJbkySES4")
 sheet_leis = planilha3.worksheet("Página3")
 
 app = Flask(__name__)
