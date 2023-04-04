@@ -212,7 +212,7 @@ def coleta():
     taboao_da_serra='https://leismunicipais.com.br/legislacao-municipal/5324/leis-de-taboao-da-serra?q='
     carapicuiba='https://leismunicipais.com.br/legislacao-municipal/4855/leis-de-carapicuiba?q='
     cotia='https://leismunicipais.com.br/legislacao-municipal/4880/leis-de-cotia?q='
-    cidades=[osasco, guarulhos, sao_bernardo, carapicuiba, taboao_da_serra, cotia, itaquaquecetuba, suzano, barueri, diadema]
+    cidades=[osasco, guarulhos, sao_bernardo, carapicuiba, taboao_da_serra, cotia, itaquaquecetuba, suzano, diadema, barueri]
 
     for cidade in cidades:
       requisicao=requests.get(cidade)
