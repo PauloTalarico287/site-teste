@@ -215,15 +215,15 @@ def coleta():
     cidades=[osasco, guarulhos, sao_bernardo, carapicuiba, taboao_da_serra, cotia, itaquaquecetuba, suzano, diadema, barueri]
 
     for cidade in cidades:
-    requisicao = requests.get(cidade)
-    html = BeautifulSoup(requisicao.content, "html.parser")
-    leis = html.find_all('li', {'class':'item item-result index-leismunicipais'})
-    cidade_nome = html.find('title').text
-    for law in leis:
-      titulo = law.find('h3', {'class':'title'}).text.replace("Norma em vigor", "").strip()
-      descricao = law.find('p', {'class':'description'}).text.strip()
-      link = f"https://leismunicipais.com.br{law.find('a').get('href')}"
-      leis_cidades.append([cidade_nome, titulo, descricao, link])
+      requisicao = requests.get(cidade)
+      html = BeautifulSoup(requisicao.content, "html.parser")
+      leis = html.find_all('li', {'class':'item item-result index-leismunicipais'})
+      cidade_nome = html.find('title').text
+      for law in leis:
+        titulo = law.find('h3', {'class':'title'}).text.replace("Norma em vigor", "").strip()
+        descricao = law.find('p', {'class':'description'}).text.strip()
+        link = f"https://leismunicipais.com.br{law.find('a').get('href')}"
+        leis_cidades.append([cidade_nome, titulo, descricao, link])
 
     df = pd.DataFrame(leis_cidades, columns=['Cidade', 'Título', 'Descrição', 'Link'])
   
