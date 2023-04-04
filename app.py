@@ -201,7 +201,6 @@ def mural():
     
 @app.route("/leis")
 def coleta():
-  try:
     osasco='https://leismunicipais.com.br/legislacao-municipal/5123/leis-de-osasco/?q='
     guarulhos='https://leismunicipais.com.br/legislacao-municipal/4862/leis-de-guarulhos?q='
     sao_bernardo='https://leismunicipais.com.br/legislacao-municipal/5280/leis-de-sao-bernardo-do-campo?q='
@@ -232,8 +231,7 @@ def coleta():
     if novos_links:
       novos_dados = df[df['Link'].isin(novos_links)]
       sheet_leis.append_rows(novos_dados.values.tolist())
-    return "ok" 
+      return "Leis atualizadas"
+    else:
+      return "Já atualizamos as últimas leis"
   
-  except Exception as e:
-    print(f"Erro na coleta: {e}")
-    return 'Erro na coleta' 
