@@ -90,9 +90,17 @@ def telegram_bot():
   datahora = str(datetime.datetime.fromtimestamp(update["message"]["date"]))
   first_name = update["message"]["from"]["first_name"]    
   if message == "/start":
-    texto_resposta = "Olá! Seja bem-vinda(o) ao <b>Orçamendômetro SP</b>, produzido pela <b>Agência Mural</b>.\nAqui você poderá saber quanto a Prefeitura de São Paulo investiu na sua região.\nDigite <b>menu</b>:" 
+    texto_resposta = "Olá! Seja bem-vinda(o) ao Orçamendômetro SP, produzido pela Agência Mural.\nAqui você poderá saber quanto a Prefeitura de São Paulo investiu na sua região.\nDigite 'menu' para começar:" 
   elif message =="menu":
-    texto_resposta = "Digite o número da subprefeitura que gostaria de saber quanto foi gasto:\n0) Toda a cidade, \n1) Aricanduva/Formosa/Carrão,\n2) Butantã,\n3) Campo Limpo,\n4) Capela do Socorro,\n5) Casa Verde/Cachoeirinha,\n6) Cidade Ademar,\n7) Cidade Tiradentes,\n8) Guaianases,\n9) Vila Prudente,\n10) Ermelino Matarazzo,\n11) Freguesia/Brasilândia,\n12) Ipiranga,\n13) Itaim Paulista,\n14) Itaquera,\n15) Jabaquara,\n16) Jaçanã/Tremembé,\n17) Lapa,\n18) M'Boi Mirim,\n19) Mooca,\n20) Parelheiros,\n21) Penha,\n22) Perus/Anhanguera,\n23) Pinheiros,\n24) Pirituba/Jaraguá,\n25) Santana/Tucuruvi,\n26) Santo Amaro,\n27) São Mateus,\n28) São Miguel Paulista,\n29) Sapopemba,\n30) Sé,\n31) Vila Maria/Vila Guilherme,\n32) Vila Mariana."
+    texto_resposta = "Digite a opção que você gostaria de saber:\na) A subprefeitura que mais gastou do que estava previsto\nb) A subprefeitura que gastou a menor proporção do que estava previsto\nc) A região da cidade que teve o menor gasto por habitante\nd) Quero saber de todas as regiões."
+  elif message == "a": 
+    texto_resposta = "A Subprefeitura de Parelheiros, no extremo sul, teve o maior gasto entre as administrações. Foram R$ 120 milhões, cerca de R$ 727 por habitante. Digite 'menu' para voltar ao começo ou a letra D para saber de todas as subprefeituras"
+  elif message == "b":
+    texto_resposta = "A Subprefeitura de Sapopemba, na zona leste de São Paulo, gastou apenas R$ 6 de cada R$ 10 previstos para 2022. Foram R$ 27 milhões, quando a previsão era de R$ 45 mi. Digite 'menu' para voltar ao começo ou a letra D para saber de todas as subprefeituras"
+  elif message == "c": 
+    texto_resposta = "A Subprefeitura do Campo Limpo, na zona sul, gastou R$ 63,18 por habitante em 2022, aponta levantamento da Agência Mural. Em comparação, Parelheiros teve despesas de R$ 727 por morador. Digite 'menu' para voltar ao começo ou a letra D para saber de todas as subprefeituras."
+  elif message == "d":
+    texto_resposta = "Digite o número da subprefeitura que gostaria de saber quanto foi gasto:\n0) Reportagem completa sobre toda a cidade,\n1) Aricanduva/Formosa/Carrão,\n2) Butantã,\n3) Campo Limpo,\n4) Capela do Socorro,\n5) Casa Verde/Cachoeirinha,\n6) Cidade Ademar,\n7) Cidade Tiradentes,\n8) Guaianases,\n9) Vila Prudente,\n10) Ermelino Matarazzo,\n11) Freguesia/Brasilândia,\n12) Ipiranga,\n13) Itaim Paulista,\n14) Itaquera,\n15) Jabaquara,\n16) Jaçanã/Tremembé,\n17) Lapa,\n18) M'Boi Mirim,\n19) Mooca,\n20) Parelheiros,\n21) Penha,\n22) Perus/Anhanguera,\n23) Pinheiros,\n24) Pirituba/Jaraguá,\n25) Santana/Tucuruvi,\n26) Santo Amaro,\n27) São Mateus,\n28) São Miguel Paulista,\n29) Sapopemba,\n30) Sé,\n31) Vila Maria/Vila Guilherme,\n32) Vila Mariana."
   elif message == "Olá":
     texto_resposta = "Olá! Seja bem-vinda(o) ao Orçamendômetro SP, produzido pela Agência Mural.\nAqui você poderá saber quanto a Prefeitura de São Paulo investiu na sua região. Digite o número da subprefeitura que gostaria de saber a execução orçamentária:\n0)Toda a cidade\n1) Aricanduva/Formosa/Carrão,\n2) Butantã,\n3) Campo Limpo,\n4) Capela do Socorro,\n5) Casa Verde/Cachoeirinha,\n6) Cidade Ademar,\n7) Cidade Tiradentes,\n8) Guaianases,\n9) Vila Prudente,\n10) Ermelino Matarazzo,\n11) Freguesia/Brasilândia,\n12) Ipiranga,\n13) Itaim Paulista,\n14) Itaquera,\n15) Jabaquara,\n16) Jaçanã/Tremembé,\n17) Lapa,\n18) M'Boi Mirim,\n19) Mooca,\n20) Parelheiros,\n21) Penha,\n22) Perus/Anhanguera,\n23) Pinheiros,\n24) Pirituba/Jaraguá,\n25) Santana/Tucuruvi,\n26) Santo Amaro,\n27) São Mateus,\n28) São Miguel Paulista,\n29) Sapopemba,\n30) Sé,\n31) Vila Maria/Vila Guilherme,\n32) Vila Mariana."
   elif message == "1":
@@ -162,7 +170,7 @@ def telegram_bot():
   elif message == "0":
     texto_resposta ='Confira como a maioria das subprefeituras não realizou os serviços que estavam previstos no orçamento: https://bit.ly/3KcAlR1'
   else:
-    texto_resposta = "Não entendi! Para outras informações sobre a cidade de São Paulo, acesse o site da Agência Mural: agenciamural.org.br"
+    texto_resposta = "Acbo que digitou errado! Digite 'menu' para voltar ao começou ou para outras informações sobre a cidade de São Paulo, acesse o site da Agência Mural: agenciamural.org.br"
   nova_mensagem = {"chat_id": chat_id, "text": texto_resposta}
   requests.post(f"https://api.telegram.org./bot{TELEGRAM_API_KEY}/sendMessage", data=nova_mensagem)
   #sheet.update("A1", update_id)
