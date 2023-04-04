@@ -213,18 +213,18 @@ def coleta():
   cotia='https://leismunicipais.com.br/legislacao-municipal/4880/leis-de-cotia?q='
   cidades=[osasco, guarulhos, sao_bernardo, carapicuiba, taboao_da_serra, cotia, itaquaquecetuba, suzano, barueri, diadema]
     
-  requisicao=requests.get(cidades)
-  html=BeautifulSoup(requisicao.content)
-  leis = html.find_all('li',{'class':'item item-result index-leismunicipais'})
-  Cidade=html.find('title').text
-  leis_cidades=[]
-  
-  for law in leis:
-    Título = law.find('h3',{'class':'title'}).text.replace("Norma em vigor", "").strip()
-    Descrição = law.find('p',{'class':'description'}).text.strip()
-    Link = f"https://leismunicipais.com.br{law.find('a').get('href')}"
-    leis_cidades.append([Cidade, Título, Descrição, Link])
-  
+  for cidade in cidades:
+    requisicao=requests.get(cidade)
+    html=BeautifulSoup(requisicao.content)
+    leis = html.find_all('li',{'class':'item item-result index-leismunicipais'})
+    Cidade=html.find('title').text
+    leis_cidades=[]
+    for law in leis:
+      Título = law.find('h3',{'class':'title'}).text.replace("Norma em vigor", "").strip()
+      Descrição = law.find('p',{'class':'description'}).text.strip()
+      Link = f"https://leismunicipais.com.br{law.find('a').get('href')}"
+      leis_cidades.append([Cidade, Título, Descrição, Link])
+
   df = pd.DataFrame(leis_cidades, columns=['Cidade','Título', 'Descrição', 'Link'])
   
   valores = sheet_leis.col_values(4)
