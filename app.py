@@ -201,36 +201,41 @@ def mural():
     
 @app.route("/leis")
 def coleta():
-  osasco='https://leismunicipais.com.br/legislacao-municipal/5123/leis-de-osasco/?q='
-  guarulhos='https://leismunicipais.com.br/legislacao-municipal/4862/leis-de-guarulhos?q='
-  sao_bernardo='https://leismunicipais.com.br/legislacao-municipal/5280/leis-de-sao-bernardo-do-campo?q='
-  diadema='https://leismunicipais.com.br/legislacao-municipal/4888/leis-de-diadema?q='
-  barueri='https://leismunicipais.com.br/legislacao-municipal/4798/leis-de-barueri?q='
-  suzano='https://leismunicipais.com.br/legislacao-municipal/5321/leis-de-suzano?q='
-  itaquaquecetuba='https://leismunicipais.com.br/legislacao-municipal/5000/leis-de-itaquaquecetuba?q='
-  taboao_da_serra='https://leismunicipais.com.br/legislacao-municipal/5324/leis-de-taboao-da-serra?q='
-  carapicuiba='https://leismunicipais.com.br/legislacao-municipal/4855/leis-de-carapicuiba?q='
-  cotia='https://leismunicipais.com.br/legislacao-municipal/4880/leis-de-cotia?q='
-  cidades=[osasco, guarulhos, sao_bernardo, carapicuiba, taboao_da_serra, cotia, itaquaquecetuba, suzano, barueri, diadema]
-    
-  for cidade in cidades:
-    requisicao=requests.get(cidade)
-    html=BeautifulSoup(requisicao.content)
-    leis = html.find_all('li',{'class':'item item-result index-leismunicipais'})
-    Cidade=html.find('title').text
-    leis_cidades=[]
-    for law in leis:
-      Título = law.find('h3',{'class':'title'}).text.replace("Norma em vigor", "").strip()
-      Descrição = law.find('p',{'class':'description'}).text.strip()
-      Link = f"https://leismunicipais.com.br{law.find('a').get('href')}"
-      leis_cidades.append([Cidade, Título, Descrição, Link])
+  try:
+    osasco='https://leismunicipais.com.br/legislacao-municipal/5123/leis-de-osasco/?q='
+    guarulhos='https://leismunicipais.com.br/legislacao-municipal/4862/leis-de-guarulhos?q='
+    sao_bernardo='https://leismunicipais.com.br/legislacao-municipal/5280/leis-de-sao-bernardo-do-campo?q='
+    diadema='https://leismunicipais.com.br/legislacao-municipal/4888/leis-de-diadema?q='
+    barueri='https://leismunicipais.com.br/legislacao-municipal/4798/leis-de-barueri?q='
+    suzano='https://leismunicipais.com.br/legislacao-municipal/5321/leis-de-suzano?q='
+    itaquaquecetuba='https://leismunicipais.com.br/legislacao-municipal/5000/leis-de-itaquaquecetuba?q='
+    taboao_da_serra='https://leismunicipais.com.br/legislacao-municipal/5324/leis-de-taboao-da-serra?q='
+    carapicuiba='https://leismunicipais.com.br/legislacao-municipal/4855/leis-de-carapicuiba?q='
+    cotia='https://leismunicipais.com.br/legislacao-municipal/4880/leis-de-cotia?q='
+    cidades=[osasco, guarulhos, sao_bernardo, carapicuiba, taboao_da_serra, cotia, itaquaquecetuba, suzano, barueri, diadema]
 
-  df = pd.DataFrame(leis_cidades, columns=['Cidade','Título', 'Descrição', 'Link'])
-  
-  valores = sheet_leis.col_values(4)
-  novos_links = [link for link in df['Link'] if link not in valores]
-  
-  if novos_links:
-    novos_dados = df[df['Link'].isin(novos_links)]
-    sheet_leis.append_rows(novos_dados.values.tolist())
-    return "ok"
+    for cidade in cidades:
+      requisicao=requests.get(cidade)
+      html=BeautifulSoup(requisicao.content)
+      leis = html.find_all('li',{'class':'item item-result index-leismunicipais'})
+      Cidade=html.find('title').text
+      leis_cidades=[]
+      for law in leis:
+        Título = law.find('h3',{'class':'title'}).text.replace("Norma em vigor", "").strip()
+        Descrição = law.find('p',{'class':'description'}).text.strip()
+        Link = f"https://leismunicipais.com.br{law.find('a').get('href')}"
+        leis_cidades.append([Cidade, Título, Descrição, Link])
+
+    df = pd.DataFrame(leis_cidades, columns=['Cidade','Título', 'Descrição', 'Link'])
+
+    valores = sheet_leis.col_values(4)
+    novos_links = [link for link in df['Link'] if link not in valores]
+
+    if novos_links:
+      novos_dados = df[df['Link'].isin(novos_links)]
+      sheet_leis.append_rows(novos_dados.values.tolist())
+      return "ok"
+    return 'OK'
+  except Exception as e:
+    print(f"Erro na coleta: {e}")
+    return 'Erro na coleta'
