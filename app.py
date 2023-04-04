@@ -216,7 +216,7 @@ def coleta():
 
     for cidade in cidades:
       requisicao = requests.get(cidade)
-      html = BeautifulSoup(requisicao.content, "html.parser")
+      html = BeautifulSoup(requisicao.content)
       leis = html.find_all('li', {'class':'item item-result index-leismunicipais'})
       cidade_nome = html.find('title').text
       for law in leis:
@@ -225,7 +225,7 @@ def coleta():
         link = f"https://leismunicipais.com.br{law.find('a').get('href')}"
         leis_cidades.append([cidade_nome, titulo, descricao, link])
 
-    df = pd.DataFrame(leis_cidades, columns=['Cidade', 'Título', 'Descrição', 'Link'])
+    df = pd.DataFrame(leis_cidades, columns=['cidade', 'titulo', 'descricão', 'link'])
   
     valores = sheet_leis.col_values(4)
     novos_links = [link for link in df['Link'] if link not in valores]
