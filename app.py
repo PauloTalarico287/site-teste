@@ -20,8 +20,8 @@ sheet = planilha.worksheet("Página1")
 sheet2= planilha.worksheet("Página2")
 sheet3= planilha.worksheet("Página3")
 
-planilha2=api.open_by_key("1cmT3CmymxcIDi2dxHa8nuI-S7d-AUYbd9C7-gcQ7YhY")
-sheet_novo = planilha2.worksheet("Página1")
+planilha2=api.open_by_key("18cS8RByMKoDUdjlYZQx3j6_uHPOwGbT2w-wqVVhb9Dg")
+sheet_novo = planilha2.worksheet("Teste - Publicações no site")
 
 planilha3=api.open_by_key("1HFKm-eINHeoCkYnqsKsc1elEuSRKIh9Q8MoJbkySES4")
 sheet_leis = planilha3.worksheet("Página3")
@@ -184,8 +184,8 @@ def mural():
   requisicao=requests.get(link)
   html=BeautifulSoup(requisicao.content)
   noticias=html.find_all('div',{'class':'texto mt-1'})
+  Publicacoes = []
   for link in noticias:
-    Publicacoes = []
     Autor_e_Data= link.find('span',{'class':'detalhes mt-1 d-block'}).text
     Título = link.find('h2',{"class":"m-0 mt-1"}).text
     Linha_Fina = link.find('p',{"class":"linha-fina m-0 mt-1"}).text
