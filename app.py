@@ -229,14 +229,11 @@ def coleta():
   
     valores = sheet_leis.col_values(4)
     novos_links = [link for link in df['Link'] if link not in valores]
-
     if novos_links:
       novos_dados = df[df['Link'].isin(novos_links)]
       sheet_leis.append_rows(novos_dados.values.tolist())
-  
-  return "ok"
+    return "ok" 
   
   except Exception as e:
     print(f"Erro na coleta: {e}")
-    return 'Erro na coleta'
-  
+    return 'Erro na coleta' 
