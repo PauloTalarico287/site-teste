@@ -213,13 +213,12 @@ def coleta():
     carapicuiba='https://leismunicipais.com.br/legislacao-municipal/4855/leis-de-carapicuiba?q='
     cotia='https://leismunicipais.com.br/legislacao-municipal/4880/leis-de-cotia?q='
     cidades=[osasco, guarulhos, sao_bernardo, carapicuiba, taboao_da_serra, cotia, itaquaquecetuba, suzano, diadema, barueri]
-    
+    leis_cidades=[]
     for cidade in cidades:
       requisicao=requests.get(cidade)
       html=BeautifulSoup(requisicao.content)
       leis = html.find_all('li',{'class':'item item-result index-leismunicipais'})
       Cidade=html.find('title').text
-      leis_cidades=[]
       for law in leis:
         Título = law.find('h3',{'class':'title'}).text.replace("Norma em vigor", "").strip()
         Descrição = law.find('p',{'class':'description'}).text.strip()
