@@ -201,6 +201,7 @@ def mural():
     
 @app.route("/leis")
 def coleta():
+  try:
     osasco='https://leismunicipais.com.br/legislacao-municipal/5123/leis-de-osasco/?q='
     guarulhos='https://leismunicipais.com.br/legislacao-municipal/4862/leis-de-guarulhos?q='
     sao_bernardo='https://leismunicipais.com.br/legislacao-municipal/5280/leis-de-sao-bernardo-do-campo?q='
@@ -212,20 +213,21 @@ def coleta():
     carapicuiba='https://leismunicipais.com.br/legislacao-municipal/4855/leis-de-carapicuiba?q='
     cotia='https://leismunicipais.com.br/legislacao-municipal/4880/leis-de-cotia?q='
     cidades=[osasco, guarulhos, sao_bernardo, carapicuiba, taboao_da_serra, cotia, itaquaquecetuba, suzano, diadema, barueri]
-
+    
     for cidade in cidades:
-      requisicao = requests.get(cidade)
-      html = BeautifulSoup(requisicao.content)
-      leis = html.find_all('li', {'class':'item item-result index-leismunicipais'})
-      cidade_nome = html.find('title').text
+      requisicao=requests.get(cidade)
+      html=BeautifulSoup(requisicao.content)
+      leis = html.find_all('li',{'class':'item item-result index-leismunicipais'})
+      Cidade=html.find('title').text
+      leis_cidades=[]
       for law in leis:
-        titulo = law.find('h3', {'class':'title'}).text.replace("Norma em vigor", "").strip()
-        descricao = law.find('p', {'class':'description'}).text.strip()
-        link = f"https://leismunicipais.com.br{law.find('a').get('href')}"
-        leis_cidades.append([cidade_nome, titulo, descricao, link])
+        Título = law.find('h3',{'class':'title'}).text.replace("Norma em vigor", "").strip()
+        Descrição = law.find('p',{'class':'description'}).text.strip()
+        Link = f"https://leismunicipais.com.br{law.find('a').get('href')}"
+        leis_cidades.append([Cidade, Título, Descrição, Link])
 
-    df = pd.DataFrame(leis_cidades, columns=['cidade', 'titulo', 'descricão', 'link'])
-  
+    df = pd.DataFrame(leis_cidades, columns=['Cidade','Título', 'Descrição', 'Link'])
+
     valores = sheet_leis.col_values(4)
     novos_links = [link for link in df['Link'] if link not in valores]
     if novos_links:
@@ -234,4 +236,8 @@ def coleta():
       return "Leis atualizadas"
     else:
       return "Já atualizamos as últimas leis"
+    
+  except Exception as e:
+    print(f"Erro na coleta: {e}")
+    return 'Erro na coleta' 
   
