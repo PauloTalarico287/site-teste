@@ -86,6 +86,8 @@ def telegram_bot():
   update = request.json
   message = update["message"]["text"]
   chat_id = update["message"]["chat"]["id"]
+  datahora = str(datetime.datetime.fromtimestamp(update["message"]["date"]))
+  first_name = update["message"]["from"]["first_name"]    
   if message == "/start":
     texto_resposta = "Olá! Seja bem-vinda(o) ao Orçamendômetro SP, produzido pela Agência Mural.\nAqui você poderá saber quanto a Prefeitura de São Paulo investiu na sua região. Digite o número da subprefeitura que gostaria de saber a execução orçamentária:\n0) Toda a cidade, \n1) Aricanduva/Formosa/Carrão,\n2) Butantã,\n3) Campo Limpo,\n4) Capela do Socorro,\n5) Casa Verde/Cachoeirinha,\n6) Cidade Ademar,\n7) Cidade Tiradentes,\n8) Guaianases,\n9) Vila Prudente,\n10) Ermelino Matarazzo,\n11) Freguesia/Brasilândia,\n12) Ipiranga,\n13) Itaim Paulista,\n14) Itaquera,\n15) Jabaquara,\n16) Jaçanã/Tremembé,\n17) Lapa,\n18) M'Boi Mirim,\n19) Mooca,\n20) Parelheiros,\n21) Penha,\n22) Perus/Anhanguera,\n23) Pinheiros,\n24) Pirituba/Jaraguá,\n25) Santana/Tucuruvi,\n26) Santo Amaro,\n27) São Mateus,\n28) São Miguel Paulista,\n29) Sapopemba,\n30) Sé,\n31) Vila Maria/Vila Guilherme,\n32) Vila Mariana."
   elif message == "Olá":
@@ -160,6 +162,9 @@ def telegram_bot():
     texto_resposta = "Não entendi! Para outras informações sobre a cidade de São Paulo, acesse o site da Agência Mural: agenciamural.org.br"
   nova_mensagem = {"chat_id": chat_id, "text": texto_resposta}
   requests.post(f"https://api.telegram.org./bot{TELEGRAM_API_KEY}/sendMessage", data=nova_mensagem)
+  #sheet.update("A1", update_id)
+  sheet2.append_row([datahora, first_name, username, sender_id, message])  
+  #sheet3.append_rows(mensagens)
   return "ok"
 
 @app.route("/mural")
