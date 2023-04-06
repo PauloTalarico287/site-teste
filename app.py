@@ -163,7 +163,7 @@ def mural():
   valores = sheet.col_values(4)
   for link in webstories:
     if URL not in valores:
-      novoweb= w.find("a").get("href")
+      novoweb= link.find("a").get("href")
       Autor = 'Da Redação'
       Titulo='Novo webstory'
       Descrição='Reportagem em formato de webstory da Agência Mural'
