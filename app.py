@@ -172,14 +172,15 @@ def webstories():
   html=BeautifulSoup(requisicao.content)
   webstories = html.find_all('div', {'class':'col pb-4 text-center'})
   Publicacoes = []
-  valores = sheet_novo.col_values(4)
   for link in webstories:
+    URL= link.find("a").get("href")
+    Autor = 'Da Redação'
+    Titulo='Novo webstory'
+    Descricao='Reportagem em formato de webstory da Agência Mural'
+    valores = sheet_novo.col_values(4)
     if URL not in valores:
-      URL= link.find("a").get("href")
-      Autor = 'Da Redação'
-      Titulo='Novo webstory'
-      Descricão='Reportagem em formato de webstory da Agência Mural'
-      Publicacoes.append([Autor, Titulo, Descrição, URL])
+      Publicacoes.append([Autor, Titulo, Descricao, URL])
+      df = pd.DataFrame(Publicacoes, columns=['Autor_e_Data', 'Título', 'Linha_Fina', 'URL'])
       sheet_novo.append_rows(Publicacoes)   
       return "Nova notícia atualizada"
     else:
