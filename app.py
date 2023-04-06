@@ -171,8 +171,8 @@ def webstories():
   Publicacoes = []
   valores = sheet.col_values(4)
   for link in webstories:
-    if novoweb not in valores:
-      novoweb= link.find("a").get("href")
+    if URL not in valores:
+      URL= link.find("a").get("href")
       Autor = 'Da Redação'
       Titulo='Novo webstory'
       Descrição='Reportagem em formato de webstory da Agência Mural'
