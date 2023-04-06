@@ -170,7 +170,7 @@ def webstories():
   webstories = html.find_all('div', {'class':'col pb-4 text-center'})
   valores = sheet.col_values(4)
   for link in webstories:
-    if URL not in valores:
+    if novoweb not in valores:
       novoweb= link.find("a").get("href")
       Autor = 'Da Redação'
       Titulo='Novo webstory'
