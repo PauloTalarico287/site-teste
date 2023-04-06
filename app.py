@@ -143,37 +143,39 @@ def telegram_bot():
 
 @app.route("/mural")
 def mural():
-  link='https://www.agenciamural.org.br/noticias/'
-  requisicao=requests.get(link)
-  html=BeautifulSoup(requisicao.content)
-  noticias=html.find_all('div',{'class':'texto mt-1'})
-  Publicacoes = []
-  for link in noticias:
-    Autor_e_Data= link.find('span',{'class':'detalhes mt-1 d-block'}).text
-    Título = link.find('h2',{"class":"m-0 mt-1"}).text
-    Linha_Fina = link.find('p',{"class":"linha-fina m-0 mt-1"}).text
-    URL=link.find('a').get('href')
-    valores = sheet_novo.col_values(4)
-    if URL not in valores:
-      Publicacoes.append([Autor_e_Data, Título, Linha_Fina, URL])
-      df=pd.DataFrame(Publicacoes, columns=['Autor_e_Data', 'Título', 'Linha_Fina', 'URL'])
-      sheet_novo.append_rows(Publicacoes)
-      
-      webstories = html.find_all('div', {'class':'col pb-4 text-center'})
-      valores = sheet_novo.col_values(4)
-      
-      for link in webstories:
+    link = 'https://www.agenciamural.org.br/noticias/'
+    requisicao = requests.get(link)
+    html = BeautifulSoup(requisicao.content)
+    noticias = html.find_all('div', {'class': 'texto mt-1'})
+    Publicacoes = []
+    for link in noticias:
+        Autor_e_Data = link.find('span', {'class': 'detalhes mt-1 d-block'}).text
+        Título = link.find('h2', {"class": "m-0 mt-1"}).text
+        Linha_Fina = link.find('p', {"class": "linha-fina m-0 mt-1"}).text
+        URL = link.find('a').get('href')
+        valores = sheet_novo.col_values(4)
         if URL not in valores:
-          URL= link.find("a").get("href")
-          Autor = 'Da Redação'
-          Titulo='Novo webstory'
-          Descricao='Reportagem em formato de webstory da Agência Mural'
-          Publicacoes.append([Autor, Titulo, Descricao, URL])
-          sheet_novo.append_rows(Publicacoes)   
-          return "Novas notícias atualizadas"
-        else:
-          return "Já atualizamos as últimas notícias"
+            Publicacoes.append([Autor_e_Data, Título, Linha_Fina, URL])
 
+    df = pd.DataFrame(Publicacoes, columns=['Autor_e_Data', 'Título', 'Linha_Fina', 'URL'])
+    sheet_novo.append_rows(Publicacoes)
+
+    webstories = html.find_all('div', {'class': 'col pb-4 text-center'})
+    valores = sheet_novo.col_values(4)
+
+    for link in webstories:
+        if URL not in valores:
+            URL = link.find("a").get("href")
+            Autor = 'Da Redação'
+            Titulo = 'Novo webstory'
+            Descricao = 'Reportagem em formato de webstory da Agência Mural'
+            Publicacoes.append([Autor, Titulo, Descricao, URL])
+            sheet_novo.append_rows(Publicacoes)
+
+    if len(Publicacoes) > 0:
+        return "Novas notícias atualizadas"
+    else:
+        return "Já atualizamos as últimas notícias"
 #@app.route("/webstories")
 #def webstories():
   #link='https://www.agenciamural.org.br/noticias/'
