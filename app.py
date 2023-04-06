@@ -167,8 +167,8 @@ def mural():
           URL= link.find("a").get("href")
           Autor = 'Da Redação'
           Titulo='Novo webstory'
-          Descrição='Reportagem em formato de webstory da Agência Mural'
-          Publicacoes.append([Autor, Titulo, Descrição, novoweb])
+          Descricao='Reportagem em formato de webstory da Agência Mural'
+          Publicacoes.append([Autor, Titulo, Descricao, URL])
           sheet_novo.append_rows(Publicacoes)   
           return "Novas notícias atualizadas"
         else:
