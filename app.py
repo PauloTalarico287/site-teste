@@ -157,22 +157,10 @@ def mural():
     if URL not in valores:
       Publicacoes.append([Autor_e_Data, Título, Linha_Fina, URL])
       df=pd.DataFrame(Publicacoes, columns=['Autor_e_Data', 'Título', 'Linha_Fina', 'URL'])
-      sheet_novo.append_rows(Publicacoes)
-  
-  webstories = html.find_all('div', {'class':'col pb-4 text-center'})
-  valores = sheet.col_values(4)
-  for link in webstories:
-    if URL not in valores:
-      novoweb= link.find("a").get("href")
-      Autor = 'Da Redação'
-      Titulo='Novo webstory'
-      Descrição='Reportagem em formato de webstory da Agência Mural'
-      Publicoes.append([Autor, Titulo, Descrição, novoweb])
-      sheet_novo.append_rows(Publicacoes)   
-      
-      return "Nova notícia atualizada"
-    else:
-      return "Já atualizamos as últimas notícias"
+      sheet_novo.append_rows(Publicacoes)      
+    return "Nova notícia atualizada"
+  else:
+    return "Já atualizamos as últimas notícias"
     
 @app.route("/leis")
 def coleta():
