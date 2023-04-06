@@ -168,6 +168,7 @@ def webstories():
   requisicao=requests.get(link)
   html=BeautifulSoup(requisicao.content)
   webstories = html.find_all('div', {'class':'col pb-4 text-center'})
+  Publicacoes = []
   valores = sheet.col_values(4)
   for link in webstories:
     if novoweb not in valores:
