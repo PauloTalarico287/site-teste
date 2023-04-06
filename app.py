@@ -162,7 +162,7 @@ def mural():
     else:
       return "Já atualizamos as últimas notícias"
 
-@app.route("/webstories)
+@app.route("/webstories")
 def webstories():
   link='https://www.agenciamural.org.br/noticias/'
   requisicao=requests.get(link)
