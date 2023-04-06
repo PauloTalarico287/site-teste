@@ -167,8 +167,8 @@ def mural():
       Autor = 'Da Redação'
       Titulo='Novo webstory'
       Descrição='Reportagem em formato de webstory da Agência Mural'
-      Publicações.append([Autor, Titulo, Descrição, novoweb])
-      sheet.append_rows(Publicações)   
+      Publicaoees.append([Autor, Titulo, Descrição, novoweb])
+      sheet.append_rows(Publicacoes)   
       
       return "Nova notícia atualizada"
     else:
