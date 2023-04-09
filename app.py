@@ -239,3 +239,15 @@ def bot_diario():
             novas_leis.append(raspadas)
     if novas_leis:
         enviar_mensagem(novas_leis)
+        
+        message = Mail(
+          from_email='paulo@agenciamural.org.br',
+          to_emails='paulotbastos@hotmail.com',
+          subject='Leis atualizadas',
+          html_content=f'Seguem as útimas leis: {novas_leis}'
+        )
+        sg = SendGridAPIClient(key)
+        response = sg.send(message)
+      
+     return "ok"
+        
