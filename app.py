@@ -236,8 +236,8 @@ def bot_diario():
     leis_ja_enviadas = sheet_leis.col_values(4) # supondo que essa é a coluna com as URLs
     novas_leis = []
     for raspada in leis_ja_enviadas:
-        if raspada not in leis_ja_enviadas:
-            novas_leis.append(raspadas)
+        if raspada not in novas_leis:
+            novas_leis.append(raspada)
     if novas_leis:        
         message = Mail(
           from_email='paulo@agenciamural.org.br',
