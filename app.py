@@ -228,33 +228,31 @@ def coleta():
       return "Leis atualizadas"
     else:
       return "Já atualizamos as últimas leis"
-    
-    novas_leis = []
-    for raspadas in leis_cidades:
-      if raspadas not in valores:
-            novas_leis.append(raspadas)
-    if novas_leis:        
-        message = Mail(
-          from_email='paulo@agenciamural.org.br',
-          to_emails='paulotbastos@hotmail.com',
-          subject='Leis atualizadas',
-          html_content=f'Seguem as útimas leis: {novas_leis}'
-        )
-        sg = SendGridAPIClient(SENDGRID_KEY)
-        response = sg.send(message)
-      
-    return "email ok"     
-  
+      novas_leis = []
+      for raspadas in leis_cidades:
+        if raspadas not in valores:
+              novas_leis.append(raspadas)
+      if novas_leis:        
+          message = Mail(
+            from_email='paulo@agenciamural.org.br',
+            to_emails='paulotbastos@hotmail.com',
+            subject='Leis atualizadas',
+            html_content=f'Seguem as útimas leis: {novas_leis}'
+          )
+          sg = SendGridAPIClient(SENDGRID_KEY)
+          response = sg.send(message)
+      return "email ok"   
+
   except Exception as e:
     print(f"Erro na coleta: {e}")
     return 'Erro na coleta'
   
 @app.route('/bot-diario')
 def bot_diario():
-    leis_ja_enviadas = sheet_leis.col_values(4) # supondo que essa é a coluna com as URLs
-    
     novas_leis = []
-    for raspada in leis_ja_enviadas:
+    leis_ja_enviadas = sheet_leis.col_values(4) # supondo que essa é a coluna com as URLs
+    leis = sheet_leis.col_values(1,2,3,4)  
+    for raspada in leis:
         if raspada not in novas_leis:
             novas_leis.append(raspada)
     if novas_leis:        
