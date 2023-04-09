@@ -57,11 +57,11 @@ def telegram_bot():
   elif message =="/menu":
     texto_resposta = "Clique na opção que você gostaria de saber:\n/a) A subprefeitura que mais gastou do que estava previsto\n/b) A subprefeitura que gastou menos do que estava previsto\n/c) A região da cidade que teve o menor gasto por habitante\n/d) Quero saber de todas as regiões."
   elif message == "/a": 
-    texto_resposta = "A Subprefeitura de Parelheiros, no extremo sul, teve o maior gasto entre as administrações. Foram R$ 120 milhões, cerca de R$ 727 por habitante. Digite 'menu' para voltar ao começo ou a letra 'd' para saber de todas as subprefeituras"
+    texto_resposta = "A Subprefeitura de Parelheiros, no extremo sul, teve o maior gasto entre as administrações. Foram R$ 120 milhões, cerca de R$ 727 por habitante. Clique em /menu para voltar ao começo ou na letra /d para saber de todas as subprefeituras."
   elif message == "/b":
-    texto_resposta = "A Subprefeitura de Sapopemba, na zona leste de São Paulo, gastou apenas R$ 6 de cada R$ 10 previstos para 2022. Foram R$ 27 milhões, quando a previsão era de R$ 45 mi. Digite 'menu' para voltar ao começo ou a letra 'd' para saber de todas as subprefeituras"
+    texto_resposta = "A Subprefeitura de Sapopemba, na zona leste de São Paulo, gastou apenas R$ 6 de cada R$ 10 previstos para 2022. Foram R$ 27 milhões, quando a previsão era de R$ 45 mi. Clique em /menu para voltar ao começo ou na letra /d para saber de todas as subprefeituras."
   elif message == "/c": 
-    texto_resposta = "A Subprefeitura do Campo Limpo, na zona sul, gastou R$ 63,18 por habitante em 2022, aponta levantamento da Agência Mural. Em comparação, Parelheiros teve despesas de R$ 727 por morador. Digite 'menu' para voltar ao começo ou a letra 'd' para saber de todas as subprefeituras."
+    texto_resposta = "A Subprefeitura do Campo Limpo, na zona sul, gastou R$ 63,18 por habitante em 2022, aponta levantamento da Agência Mural. Em comparação, Parelheiros teve despesas de R$ 727 por morador. Clique em /menu para voltar ao começo ou na letra /d para saber de todas as subprefeituras."
   elif message == "/d":
     texto_resposta = "Clique no número da subprefeitura que gostaria de saber quanto foi gasto:\n/0) Reportagem completa sobre toda a cidade,\n/1) Aricanduva/Formosa/Carrão,\n/2) Butantã,\n/3) Campo Limpo,\n/4) Capela do Socorro,\n/5) Casa Verde/Cachoeirinha,\n/6) Cidade Ademar,\n/7) Cidade Tiradentes,\n/8) Guaianases,\n/9) Vila Prudente,\n/10) Ermelino Matarazzo,\n/11) Freguesia/Brasilândia,\n/12) Ipiranga,\n/13) Itaim Paulista,\n/14) Itaquera,\n/15) Jabaquara,\n/16) Jaçanã/Tremembé,\n/17) Lapa,\n/18) M'Boi Mirim,\n/19) Mooca,\n/20) Parelheiros,\n21) Penha,\n/22) Perus/Anhanguera,\n/23) Pinheiros,\n/24) Pirituba/Jaraguá,\n/25) Santana/Tucuruvi,\n/26) Santo Amaro,\n/27) São Mateus,\n/28) São Miguel Paulista,\n/29) Sapopemba,\n/30) Sé,\n/31) Vila Maria/Vila Guilherme,\n/32) Vila Mariana."
   elif message == "/1":
