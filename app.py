@@ -238,7 +238,7 @@ def coleta():
 def bot_diario():
     novas_leis = []
     leis_ja_enviadas = sheet_leis.col_values(4) # supondo que essa é a coluna com as URLs
-    leis = leis_cidades() 
+    leis = sheet_leis.get_all_values() 
     for raspada in leis:
         if raspada not in novas_leis:
             novas_leis.append(raspada)
