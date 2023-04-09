@@ -229,10 +229,6 @@ def coleta():
     else:
       return "Já atualizamos as últimas leis"
     
-  except Exception as e:
-    print(f"Erro na coleta: {e}")
-    return 'Erro na coleta'
-  
     leis_ja_enviadas = sheet_leis.col_values(4) # supondo que essa é a coluna com as URLs
     leis_raspadas = leis_cidades() 
     novas_leis = []
@@ -251,9 +247,14 @@ def coleta():
       
     return "email ok"     
   
+  except Exception as e:
+    print(f"Erro na coleta: {e}")
+    return 'Erro na coleta'
+  
 @app.route('/bot-diario')
 def bot_diario():
     leis_ja_enviadas = sheet_leis.col_values(4) # supondo que essa é a coluna com as URLs
+    
     novas_leis = []
     for raspada in leis_ja_enviadas:
         if raspada not in novas_leis:
