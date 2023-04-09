@@ -7,6 +7,6 @@ oauth2client
 bs4
 pandas
 datetime
-sendgrid
 json
 os
+sendgrid
