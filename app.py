@@ -227,3 +227,13 @@ def coleta():
   except Exception as e:
     print(f"Erro na coleta: {e}")
     return 'Erro na coleta'
+  
+@app.route('/bot-diario', methods=["POST"])
+def bot_diario():
+    leis_ja_enviadas = sheet_leis.col_values(4) # supondo que essa é a coluna com as URLs
+    novas_leis = []
+    for raspada in leis_ja_enviadas:
+        if raspada not in leis_ja_enviadas:
+            novas_leis.append(raspadas)
+    if novas_leis:
+        enviar_mensagem(novas_leis)
