@@ -238,10 +238,12 @@ def coleta():
 def bot_diario():
     novas_leis = []
     leis_ja_enviadas = sheet_leis.col_values(4) # supondo que essa é a coluna com as URLs
-    leis = sheet_leis.get_all_values() 
-    for raspada in leis:
-        if raspada not in novas_leis:
-            novas_leis.append(raspada)
+    leis = sheet_leis.get_all_values()     
+    url_col_index = 3 # Assumindo que a coluna com as URLs é a coluna 4 (índice 3)
+    for row in leis:
+    url = row[url_col_index]
+    if url not in leis_ja_enviadas and url not in novas_leis:
+        novas_leis.append(url)
     if novas_leis:        
         message = Mail(
           from_email='paulo@agenciamural.org.br',
@@ -252,4 +254,4 @@ def bot_diario():
         sg = SendGridAPIClient(SENDGRID_KEY)
         response = sg.send(message)
       
-    return "ok"     
+    return "ok"   
