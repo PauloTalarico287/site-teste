@@ -238,9 +238,7 @@ def bot_diario():
     for raspada in leis_ja_enviadas:
         if raspada not in leis_ja_enviadas:
             novas_leis.append(raspadas)
-    if novas_leis:
-        enviar_mensagem(novas_leis)
-        
+    if novas_leis:        
         message = Mail(
           from_email='paulo@agenciamural.org.br',
           to_emails='paulotbastos@hotmail.com',
