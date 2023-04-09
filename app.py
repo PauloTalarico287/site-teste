@@ -141,9 +141,9 @@ def telegram_bot():
     texto_resposta = "Acho que digitou errado! Clique em /menu para voltar ao começo ou para outras informações sobre a cidade de São Paulo e a região metropolitana, acesse o site da Agência Mural: agenciamural.org.br"
   nova_mensagem = {"chat_id": chat_id, "text": texto_resposta}
   requests.post(f"https://api.telegram.org./bot{TELEGRAM_API_KEY}/sendMessage", data=nova_mensagem)
-  #sheet.update("A1", update_id)
+  sheet.update("A1", update_id)
   sheet2.append_row([datahora, first_name, chat_id, message])  
-  #sheet3.append_rows(mensagens)
+  sheet3.append_rows(nova_mensagem)
   return "ok"
 
 @app.route("/mural")
@@ -233,8 +233,8 @@ def coleta():
   except Exception as e:
     print(f"Erro na coleta: {e}")
     return 'Erro na coleta'
-  
-@app.route('/bot-diario')
+    
+@app.route('/bot-diario', methods=['POST'])
 def bot_diario():
     novas_leis = []
     leis_ja_enviadas = sheet_leis.col_values(4) # supondo que essa é a coluna com as URLs
@@ -253,6 +253,5 @@ def bot_diario():
           )
           sg = SendGridAPIClient(SENDGRID_KEY)
           response = sg.send(message)
-          print(response.status_code)
-
+          
     return "ok"   
