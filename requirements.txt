@@ -4,7 +4,6 @@ flask
 gspread
 gunicorn
 oauth2client
-os
 pandas
 requests
 sendgrid
