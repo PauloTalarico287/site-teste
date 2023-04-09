@@ -233,6 +233,24 @@ def coleta():
     print(f"Erro na coleta: {e}")
     return 'Erro na coleta'
   
+    leis_ja_enviadas = sheet_leis.col_values(4) # supondo que essa é a coluna com as URLs
+    leis_raspadas = leis_cidades() 
+    novas_leis = []
+    for raspadas in leis_raspadas:
+      if raspada not in leis_ja_enviadas:
+            novas_leis.append(raspadas)
+    if novas_leis:        
+        message = Mail(
+          from_email='paulo@agenciamural.org.br',
+          to_emails='paulotbastos@hotmail.com',
+          subject='Leis atualizadas',
+          html_content=f'Seguem as útimas leis: {novas_leis}'
+        )
+        sg = SendGridAPIClient(SENDGRID_KEY)
+        response = sg.send(message)
+      
+    return "email ok"     
+  
 @app.route('/bot-diario')
 def bot_diario():
     leis_ja_enviadas = sheet_leis.col_values(4) # supondo que essa é a coluna com as URLs
