@@ -250,5 +250,4 @@ def bot_diario():
         sg = SendGridAPIClient(key)
         response = sg.send(message)
       
-     return "ok"
-        
+    return "ok"     
