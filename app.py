@@ -241,17 +241,17 @@ def bot_diario():
     leis = sheet_leis.get_all_values()     
     url_col_index = 3 # Assumindo que a coluna com as URLs é a coluna 4 (índice 3)
     for row in leis:
-    url = row[url_col_index]
-    if url not in leis_ja_enviadas and url not in novas_leis:
-        novas_leis.append(url)
-    if novas_leis:        
-        message = Mail(
-          from_email='paulo@agenciamural.org.br',
-          to_emails='paulotbastos@hotmail.com',
-          subject='Leis atualizadas',
-          html_content=f'Seguem as útimas leis: {novas_leis}'
-        )
-        sg = SendGridAPIClient(SENDGRID_KEY)
-        response = sg.send(message)
-      
+      url = row[url_col_index]
+      if url not in leis_ja_enviadas and url not in novas_leis:
+          novas_leis.append(url)
+      if novas_leis:        
+          message = Mail(
+            from_email='paulo@agenciamural.org.br',
+            to_emails='paulotbastos@hotmail.com',
+            subject='Leis atualizadas',
+            html_content=f'Seguem as útimas leis: {novas_leis}'
+          )
+          sg = SendGridAPIClient(SENDGRID_KEY)
+          response = sg.send(message)
+
     return "ok"   
