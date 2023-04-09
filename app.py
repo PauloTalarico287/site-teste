@@ -226,20 +226,7 @@ def coleta():
     if novos_links:
       novos_dados = df[df['Link'].isin(novos_links)]
       sheet_leis.append_rows(novos_dados.values.tolist())
-      
-    for raspadas in leis_cidades:
-      if raspadas not in valores:
-            novas_leis.append(raspadas)
-    if novas_leis:        
-        message = Mail(
-          from_email='paulo@agenciamural.org.br',
-          to_emails='paulotbastos@hotmail.com',
-          subject='Leis atualizadas',
-          html_content=f'Seguem as útimas leis: {novas_leis}'
-          )
-          sg = SendGridAPIClient(SENDGRID_KEY)
-          response = sg.send(message)
-      return "Leis atualizadas e email enviado"
+      return "Leis atualizadas"
     else:
       return "Já atualizamos as últimas leis"
       
