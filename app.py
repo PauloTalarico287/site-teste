@@ -237,7 +237,7 @@ def coleta():
     leis_raspadas = leis_cidades() 
     novas_leis = []
     for raspadas in leis_raspadas:
-      if raspada not in leis_ja_enviadas:
+      if raspadas not in leis_ja_enviadas:
             novas_leis.append(raspadas)
     if novas_leis:        
         message = Mail(
