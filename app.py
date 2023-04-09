@@ -247,7 +247,7 @@ def bot_diario():
           subject='Leis atualizadas',
           html_content=f'Seguem as útimas leis: {novas_leis}'
         )
-        sg = SendGridAPIClient(key)
+        sg = SendGridAPIClient(SENDGRID_KEY)
         response = sg.send(message)
       
     return "ok"     
