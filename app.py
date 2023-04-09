@@ -141,9 +141,9 @@ def telegram_bot():
     texto_resposta = "Acho que digitou errado! Clique em /menu para voltar ao começo ou para outras informações sobre a cidade de São Paulo e a região metropolitana, acesse o site da Agência Mural: agenciamural.org.br"
   nova_mensagem = {"chat_id": chat_id, "text": texto_resposta}
   requests.post(f"https://api.telegram.org./bot{TELEGRAM_API_KEY}/sendMessage", data=nova_mensagem)
-  sheet.update("A1", update_id)
+  #sheet.update("A1", update_id)
   sheet2.append_row([datahora, first_name, chat_id, message])  
-  sheet3.append_rows(nova_mensagem)
+  #sheet3.append_rows(nova_mensagem)
   return "ok"
 
 @app.route("/mural")
