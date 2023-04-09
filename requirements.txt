@@ -3,7 +3,6 @@ datetime
 flask
 gspread
 gunicorn
-json
 oauth2client
 os
 pandas
