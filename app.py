@@ -229,11 +229,9 @@ def coleta():
     else:
       return "Já atualizamos as últimas leis"
     
-    leis_ja_enviadas = sheet_leis.col_values(4) # supondo que essa é a coluna com as URLs
-    leis_raspadas = leis_cidades() 
     novas_leis = []
-    for raspadas in leis_raspadas:
-      if raspadas not in leis_ja_enviadas:
+    for raspadas in leis_cidades:
+      if raspadas not in valores:
             novas_leis.append(raspadas)
     if novas_leis:        
         message = Mail(
