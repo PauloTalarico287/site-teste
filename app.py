@@ -1,11 +1,15 @@
 import datetime
 import gspread
+import json
 import pandas as pd
 import requests
 import os
+import sendgrid
 from bs4 import BeautifulSoup
 from flask import Flask, request
 from oauth2client.service_account import ServiceAccountCredentials
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, Email, To, Content
 from tchan import ChannelScraper
 
 TELEGRAM_API_KEY = os.environ["TELEGRAM_API_KEY"]
