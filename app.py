@@ -253,5 +253,6 @@ def bot_diario():
           )
           sg = SendGridAPIClient(SENDGRID_KEY)
           response = sg.send(message)
+          print(response.status_code)
 
     return "ok"   
