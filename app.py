@@ -134,7 +134,9 @@ def telegram_bot():
   elif message == "/32":
     texto_resposta ='A Subprefeitura Vila Mariana gastou R$ 50.278.531,66 em serviços públicos ao longo de 2022. O valor corresponde a 112.90% do planejado para o ano, quando o orçamento previsto era de R$ 44.534.373,00. Se quiser saber de outra região, clique em /d ou em /0 para acessar a reportagem completa.'
   elif message == "/0":
-    texto_resposta ='Confira como a maioria das subprefeituras não realizou os serviços que estavam previstos no orçamento: https://bit.ly/3KcAlR1'
+    texto_resposta ='Confira como a maioria das subprefeituras não realizou os serviços que estavam previstos no orçamento: https://bit.ly/3KcAlR1. Se quiser saber mais informações sobre a Grande São Paulo, clique em /mural ou aperte /menu para recomeçar.'
+  elif message == "/mural":
+    texto_resposta ='Somo uma agência de jornalismo que cobre as periferias de São Paulo. Saiba mais sobre nosso trabalho em: agenciamural.org.br.'   
   else:
     texto_resposta = "Acho que digitou errado! Clique em /menu para voltar ao começo ou para outras informações sobre a cidade de São Paulo e a região metropolitana, acesse o site da Agência Mural: agenciamural.org.br"
   nova_mensagem = {"chat_id": chat_id, "text": texto_resposta}
@@ -231,7 +233,7 @@ def coleta():
     print(f"Erro na coleta: {e}")
     return 'Erro na coleta'
   
-@app.route('/bot-diario', methods=["POST"])
+@app.route('/bot-diario')
 def bot_diario():
     leis_ja_enviadas = sheet_leis.col_values(4) # supondo que essa é a coluna com as URLs
     novas_leis = []
