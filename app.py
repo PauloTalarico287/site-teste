@@ -262,7 +262,7 @@ def coleta():
     print(f"Erro na coleta: {e}")
     return 'Erro na coleta'
     
-@app.route('/bot-diario', methods=['POST'])
+@app.route('/bot-diario')
 def bot_diario():
     novas_leis = []
     leis_ja_enviadas = sheet_leis.col_values(4) # supondo que essa é a coluna com as URLs
@@ -270,7 +270,7 @@ def bot_diario():
     url_col_index = 3 # Assumindo que a coluna com as URLs é a coluna 4 (índice 3)
     for row in leis:
       url = row[url_col_index]
-      if url not in leis_ja_enviadas and url not in novas_leis:
+      if url not in leis_ja_enviadas:
           novas_leis.append(url)
       if novas_leis:        
           message = Mail(
