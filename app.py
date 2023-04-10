@@ -152,6 +152,18 @@ def telegram_bot():
   sheet3.append_rows(mensagens)
   return "ok"
 
+@app.route("/email-telegram")
+def email_telegram():
+  message = Mail(
+    from_email='paulo@agenciamural.org.br',
+    to_emails='paulotbastos@hotmail.com',
+    subject='Emails novos',
+    html_content=f'Confira os últimos emails que vieram do Telegram:'
+    )
+  sg = SendGridAPIClient(SENDGRID_KEY)
+  response = sg.send(message)
+  return "ok"
+
 @app.route("/mural")
 def mural():
     link = 'https://www.agenciamural.org.br/noticias/'
@@ -259,5 +271,6 @@ def bot_diario():
           )
           sg = SendGridAPIClient(SENDGRID_KEY)
           response = sg.send(message)
-          
-    return "ok"   
+          return "Email enviado"
+      else:
+        return: "Sem novas atualizações"
