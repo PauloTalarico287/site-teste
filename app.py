@@ -22,7 +22,7 @@ conta = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
 api = gspread.authorize(conta) # sheets.new
 #Planilhas do bot do Telegram
 planilha = api.open_by_key("1Bk0tYfWtQCWZBlWxUtfXcca9iP5NuTXEI1mg_JC3JUo")
-sheet = planilha.worksheet("Página1")
+#sheet = planilha.worksheet("Página1")
 sheet2= planilha.worksheet("Página2")
 sheet3= planilha.worksheet("Página3")
 
