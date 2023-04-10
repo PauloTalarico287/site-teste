@@ -149,7 +149,7 @@ def telegram_bot():
   mensagens.append([datahora, "enviada", first_name, chat_id, texto_resposta])
   #sheet.update("A1", update_id)
   sheet2.append_row([datahora, first_name, chat_id, message])  
-  sheet3.append_rows(nova_mensagem)
+  #sheet3.append_rows(nova_mensagem)
   return "ok"
 
 @app.route("/mural")
