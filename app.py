@@ -52,6 +52,7 @@ def contato():
 
 @app.route("/telegram-bot", methods=['POST'])
 def telegram_bot():
+  mensagens = []
   update = request.json
   message = update["message"]["text"]
   chat_id = update["message"]["chat"]["id"]
@@ -134,16 +135,21 @@ def telegram_bot():
   elif message == "/32":
     texto_resposta ='A Subprefeitura Vila Mariana gastou R$ 50.278.531,66 em serviços públicos ao longo de 2022. O valor corresponde a 112.90% do planejado para o ano, quando o orçamento previsto era de R$ 44.534.373,00. Se quiser saber de outra região, clique em /d ou em /0 para acessar a reportagem completa.'
   elif message == "/0":
-    texto_resposta ='Confira como a maioria das subprefeituras não realizou os serviços que estavam previstos no orçamento: https://bit.ly/3KcAlR1. Se quiser saber mais informações sobre a Grande São Paulo, clique em /mural ou aperte /menu para recomeçar.'
+    texto_resposta ='Confira a situação das subprefeituras e o que revela o orçamento de 2022: https://bit.ly/3KcAlR1. Quer conferir mais informações sobre a Grande São Paulo? Clique em /mural ou aperte /menu para recomeçar.'
   elif message == "/mural":
-    texto_resposta ='Somo uma agência de jornalismo que cobre as periferias de São Paulo. Saiba mais sobre nosso trabalho em: agenciamural.org.br.'   
-  else:
+    texto_resposta ='Somos uma agência de jornalismo que cobre as periferias da Grande São Paulo. Se se interessou pelo nosso trabalho, clique em /newsletter ou pode acessar nosso site: agenciamural.org.br Também estamos nas redes sociais! Procure @agenciamural no Instagram, Twitter, Tik Tok e Facebook.'   
+  elif message == "/nesletter":
+    texto_resposta == "Caso queira se cadastrar na nossa newsletter quinzenal, a Mural Inbox, escreva aqui o seu email:"
+  elif "@" in message:
+    texto_resposta == "Obrigado! Vamos te cadastrar para receber a Mural Inbox. Se quiser, pode acessar as últimas aqui: https://agenciamural.substack.com/. Se quiser recomeçar, clique em /menu."
+  else: 
     texto_resposta = "Acho que digitou errado! Clique em /menu para voltar ao começo ou para outras informações sobre a cidade de São Paulo e a região metropolitana, acesse o site da Agência Mural: agenciamural.org.br"
   nova_mensagem = {"chat_id": chat_id, "text": texto_resposta}
   requests.post(f"https://api.telegram.org./bot{TELEGRAM_API_KEY}/sendMessage", data=nova_mensagem)
+  mensagens.append([datahora, "enviada", first_name, chat_id, texto_resposta])
   #sheet.update("A1", update_id)
   sheet2.append_row([datahora, first_name, chat_id, message])  
-  #sheet3.append_rows(nova_mensagem)
+  sheet3.append_rows(nova_mensagem)
   return "ok"
 
 @app.route("/mural")
