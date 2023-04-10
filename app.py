@@ -139,7 +139,7 @@ def telegram_bot():
   elif message == "/mural":
     texto_resposta ='Somos uma agência de jornalismo que cobre as periferias da Grande São Paulo. Se se interessou pelo nosso trabalho, clique em /newsletter ou pode acessar nosso site: agenciamural.org.br Também estamos nas redes sociais! Procure @agenciamural no Instagram, Twitter, Tik Tok e Facebook.'   
   elif message == "/newsletter":
-    texto_resposta == "Caso queira se cadastrar na nossa newsletter quinzenal, a Mural Inbox, escreva aqui o seu email:"
+    texto_resposta = "Caso queira se cadastrar na nossa newsletter quinzenal, a Mural Inbox, escreva aqui o seu email:"
   elif "@" in message:
     texto_resposta = "Obrigado! Vamos te cadastrar para receber a Mural Inbox. Se quiser, pode acessar as últimas aqui: https://agenciamural.substack.com/. Se quiser recomeçar, clique em /menu."
   else: 
