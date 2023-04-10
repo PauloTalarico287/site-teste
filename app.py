@@ -61,7 +61,7 @@ def telegram_bot():
   if message == "/start":
     texto_resposta = "Olá! Seja bem-vinda(o) ao Orçamendômetro SP, produzido pela Agência Mural.\nAqui você poderá saber quanto a Prefeitura de São Paulo investiu na sua região.\nClique em /menu para começar:" 
   elif message =="/menu":
-    texto_resposta = "Clique na opção que você gostaria de saber:\n/a) A subprefeitura que mais gastou do que estava previsto\n/b) A subprefeitura que gastou menos do que estava previsto\n/c) A região da cidade que teve o menor gasto por habitante\n/d) Quero saber de todas as regiões."
+    texto_resposta = "Clique na opção que você gostaria de saber:\n/a) A subprefeitura que mais gastou do que estava previsto\n/b) A subprefeitura que gastou menos do que estava previsto\n/c) A região da cidade que teve o menor gasto por habitante\n/d) Quero saber de todas as regiões\n/mural)Saber mais sobre a Agência Mural."
   elif message == "/a": 
     texto_resposta = "A Subprefeitura de Parelheiros, no extremo sul, teve o maior gasto entre as administrações. Foram R$ 120 milhões, cerca de R$ 727 por habitante. Clique em /menu para voltar ao começo ou na letra /d para saber de todas as subprefeituras."
   elif message == "/b":
@@ -141,7 +141,7 @@ def telegram_bot():
   elif message == "/newsletter":
     texto_resposta = "Caso queira se cadastrar na nossa newsletter quinzenal, a Mural Inbox, escreva aqui o seu email:"
   elif "@" in message:
-    texto_resposta = "Obrigado! Vamos te cadastrar para receber a Mural Inbox. Se quiser, pode acessar as últimas aqui: https://agenciamural.substack.com/. Se quiser recomeçar, clique em /menu."
+    texto_resposta = "Obrigado! Vamos te cadastrar para receber a Mural Inbox, nossa newsletter quinzenal. Se quiser recomeçar, clique em /menu."
   else: 
     texto_resposta = "Acho que digitou errado! Clique em /menu para voltar ao começo ou para outras informações sobre a cidade de São Paulo e a região metropolitana, acesse o site da Agência Mural: agenciamural.org.br"
   nova_mensagem = {"chat_id": chat_id, "text": texto_resposta}
