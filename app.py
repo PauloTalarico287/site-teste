@@ -159,17 +159,18 @@ def telegram_bot():
 def email_telegram():
   emails=[]
   respostas = sheet2.col_values(4)
-  if "@" in respostas:
-    emails.append(@)
-    message = Mail(
-      from_email='paulo@agenciamural.org.br',
-      to_emails='paulotbastos@hotmail.com',
-      subject='Emails novos',
-      html_content=f'Confira os últimos emails que vieram do Telegram{emails}:'
-      )
-    sg = SendGridAPIClient(SENDGRID_KEY)
-    response = sg.send(message)
-    return "ok"
+  for resposta in respostas:
+    if "@" in resposta:
+    emails.append(resposta)
+  message = Mail(
+    from_email='paulo@agenciamural.org.br',
+    to_emails='paulotbastos@hotmail.com',
+    subject='Emails novos',
+    html_content=f'Confira os últimos emails que vieram do Telegram{emails}:'
+    )
+  sg = SendGridAPIClient(SENDGRID_KEY)
+  response = sg.send(message)
+  return "ok"
 
 #2. Raspador do site da Agência Mural
 @app.route("/mural")
