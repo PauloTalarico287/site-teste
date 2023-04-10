@@ -155,6 +155,7 @@ def telegram_bot():
   sheet3.append_rows(mensagens)
   return "ok"
 
+#Aqui é uma ferramenta para que chegue um email com os emails preenchidos por leitores para cadastramos.
 @app.route("/email-telegram")
 def email_telegram():
   emails=[]
