@@ -146,7 +146,7 @@ def telegram_bot():
   elif "@" in message:
     texto_resposta = "Obrigado! Vamos te cadastrar para receber a Mural Inbox, nossa newsletter quinzenal. Se quiser recomeçar, clique em /menu."
   else: 
-    texto_resposta = "Acho que digitou errado! Clique em /menu para voltar ao começo ou para outras informações sobre a cidade de São Paulo e a região metropolitana, acesse o site da Agência Mural: agenciamural.org.br"
+    texto_resposta = "Desculpe! Não consegui entender. Clique em /menu para voltar ao começo ou para outras informações sobre a cidade de São Paulo e a região metropolitana, acesse o site da Agência Mural: agenciamural.org.br"
   nova_mensagem = {"chat_id": chat_id, "text": texto_resposta}
   requests.post(f"https://api.telegram.org./bot{TELEGRAM_API_KEY}/sendMessage", data=nova_mensagem)
   mensagens.append([datahora, "enviada", first_name, chat_id, texto_resposta])
@@ -281,4 +281,6 @@ def bot_diario():
           )
           sg = SendGridAPIClient(SENDGRID_KEY)
           response = sg.send(message)
-          return "Email enviado"
+          return jsonify({'message': 'E-mail enviado com sucesso'})
+      else:
+        return jsonify({'message': 'Nenhuma nova lei encontrada'})
