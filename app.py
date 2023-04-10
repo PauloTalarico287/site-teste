@@ -138,10 +138,10 @@ def telegram_bot():
     texto_resposta ='Confira a situação das subprefeituras e o que revela o orçamento de 2022: https://bit.ly/3KcAlR1. Quer conferir mais informações sobre a Grande São Paulo? Clique em /mural ou aperte /menu para recomeçar.'
   elif message == "/mural":
     texto_resposta ='Somos uma agência de jornalismo que cobre as periferias da Grande São Paulo. Se se interessou pelo nosso trabalho, clique em /newsletter ou pode acessar nosso site: agenciamural.org.br Também estamos nas redes sociais! Procure @agenciamural no Instagram, Twitter, Tik Tok e Facebook.'   
-  elif message == "/nesletter":
+  elif message == "/newsletter":
     texto_resposta == "Caso queira se cadastrar na nossa newsletter quinzenal, a Mural Inbox, escreva aqui o seu email:"
   elif "@" in message:
-    texto_resposta == "Obrigado! Vamos te cadastrar para receber a Mural Inbox. Se quiser, pode acessar as últimas aqui: https://agenciamural.substack.com/. Se quiser recomeçar, clique em /menu."
+    texto_resposta = "Obrigado! Vamos te cadastrar para receber a Mural Inbox. Se quiser, pode acessar as últimas aqui: https://agenciamural.substack.com/. Se quiser recomeçar, clique em /menu."
   else: 
     texto_resposta = "Acho que digitou errado! Clique em /menu para voltar ao começo ou para outras informações sobre a cidade de São Paulo e a região metropolitana, acesse o site da Agência Mural: agenciamural.org.br"
   nova_mensagem = {"chat_id": chat_id, "text": texto_resposta}
