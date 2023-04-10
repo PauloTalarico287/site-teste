@@ -161,7 +161,7 @@ def email_telegram():
   respostas = sheet2.col_values(4)
   for resposta in respostas:
     if "@" in resposta:
-    emails.append(resposta)
+      emails.append(resposta)
   message = Mail(
     from_email='paulo@agenciamural.org.br',
     to_emails='paulotbastos@hotmail.com',
