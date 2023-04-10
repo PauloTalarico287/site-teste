@@ -20,14 +20,17 @@ with open("credenciais.json", mode="w") as fobj:
   fobj.write(GOOGLE_SHEETS_CREDENTIALS)
 conta = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
 api = gspread.authorize(conta) # sheets.new
+#Planilhas do bot do Telegram
 planilha = api.open_by_key("1Bk0tYfWtQCWZBlWxUtfXcca9iP5NuTXEI1mg_JC3JUo")
 sheet = planilha.worksheet("Página1")
 sheet2= planilha.worksheet("Página2")
 sheet3= planilha.worksheet("Página3")
 
+#Planilhas usadas para o raspador do site da Agência Mural
 planilha2=api.open_by_key("18cS8RByMKoDUdjlYZQx3j6_uHPOwGbT2w-wqVVhb9Dg")
 sheet_novo = planilha2.worksheet("Teste - Publicações no site")
 
+#Planilha do Observatório de Leis
 planilha3=api.open_by_key("1HFKm-eINHeoCkYnqsKsc1elEuSRKIh9Q8MoJbkySES4")
 sheet_leis = planilha3.worksheet("Página3")
 
@@ -154,16 +157,21 @@ def telegram_bot():
 
 @app.route("/email-telegram")
 def email_telegram():
-  message = Mail(
-    from_email='paulo@agenciamural.org.br',
-    to_emails='paulotbastos@hotmail.com',
-    subject='Emails novos',
-    html_content=f'Confira os últimos emails que vieram do Telegram:'
-    )
-  sg = SendGridAPIClient(SENDGRID_KEY)
-  response = sg.send(message)
-  return "ok"
+  emails=[]
+  respostas = sheet2.col_values(4)
+  if "@" in respostas:
+    emails.append(respostas)
+    message = Mail(
+      from_email='paulo@agenciamural.org.br',
+      to_emails='paulotbastos@hotmail.com',
+      subject='Emails novos',
+      html_content=f'Confira os últimos emails que vieram do Telegram{emails}:'
+      )
+    sg = SendGridAPIClient(SENDGRID_KEY)
+    response = sg.send(message)
+    return "ok"
 
+#2. Raspador do site da Agência Mural
 @app.route("/mural")
 def mural():
     link = 'https://www.agenciamural.org.br/noticias/'
@@ -209,7 +217,7 @@ def webstories():
     else:
       return "Já atualizamos as últimas notícias"          
   
-    
+#3. Projeto: Observatório de Leis da Grande SP    
 @app.route("/leis")
 def coleta():
   try:
@@ -272,5 +280,3 @@ def bot_diario():
           sg = SendGridAPIClient(SENDGRID_KEY)
           response = sg.send(message)
           return "Email enviado"
-      else:
-        return: "Sem novas atualizações"
