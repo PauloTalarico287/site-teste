@@ -254,6 +254,16 @@ def coleta():
     if novos_links:
       novos_dados = df[df['Link'].isin(novos_links)]
       sheet_leis.append_rows(novos_dados.values.tolist())
+      novos_dados = df[df['Link'].isin(novos_links)]
+      novos_dados['Link'] = novos_dados['Link'].apply(add_link)
+      message = Mail(
+        from_email='paulo@agenciamural.org.br',
+        to_emails='paulotbastos@hotmail.com',
+        subject='Leis atualizadas',
+        html_content=f'Seguem as últimas leis: {novos_dados.to_html(escape=False)}'
+        )
+      sg = SendGridAPIClient(SENDGRID_KEY)
+      response = sg.send(message)
       return "Leis atualizadas"
     else:
       return "Já atualizamos as últimas leis"
@@ -261,26 +271,3 @@ def coleta():
   except Exception as e:
     print(f"Erro na coleta: {e}")
     return 'Erro na coleta'
-    
-@app.route('/bot-diario')
-def bot_diario():
-    novas_leis = []
-    leis_ja_enviadas = sheet_leis.col_values(4) # supondo que essa é a coluna com as URLs
-    leis = sheet_leis.get_all_values()     
-    url_col_index = 3 # Assumindo que a coluna com as URLs é a coluna 4 (índice 3)
-    for row in leis:
-      url = row[url_col_index]
-      if url not in leis_ja_enviadas:
-          novas_leis.append(url)
-      if novas_leis:        
-          message = Mail(
-            from_email='paulo@agenciamural.org.br',
-            to_emails='paulotbastos@hotmail.com',
-            subject='Leis atualizadas',
-            html_content=f'Seguem as útimas leis: {novas_leis}'
-          )
-          sg = SendGridAPIClient(SENDGRID_KEY)
-          response = sg.send(message)
-          return jsonify({'message': 'E-mail enviado com sucesso'})
-      else:
-        return jsonify({'message': 'Nenhuma nova lei encontrada'})
