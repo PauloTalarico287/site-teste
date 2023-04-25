@@ -261,7 +261,7 @@ def coleta():
       message = Mail(
         from_email='paulo@agenciamural.org.br',
         to_emails='paulotbastos@hotmail.com',
-        subject='Leis atualizadas',
+        subject='Confira as últimas leis sancionadas',
         html_content=f'Olá! Seguem as últimas leis e decretos publicados em cidades da Grande SP: {novos_dados.to_html(escape=False)}'
         )  
       sg = SendGridAPIClient(SENDGRID_KEY)
