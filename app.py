@@ -223,6 +223,7 @@ def webstories():
 @app.route("/leis")
 def coleta():
   try:
+    mogi='https://leismunicipais.com.br/legislacao-municipal/5079/leis-de-mogi-das-cruzes?q='
     osasco='https://leismunicipais.com.br/legislacao-municipal/5123/leis-de-osasco/?q='
     guarulhos='https://leismunicipais.com.br/legislacao-municipal/4862/leis-de-guarulhos?q='
     sao_bernardo='https://leismunicipais.com.br/legislacao-municipal/5280/leis-de-sao-bernardo-do-campo?q='
@@ -233,7 +234,9 @@ def coleta():
     taboao_da_serra='https://leismunicipais.com.br/legislacao-municipal/5324/leis-de-taboao-da-serra?q='
     carapicuiba='https://leismunicipais.com.br/legislacao-municipal/4855/leis-de-carapicuiba?q='
     cotia='https://leismunicipais.com.br/legislacao-municipal/4880/leis-de-cotia?q='
-    cidades=[osasco, guarulhos, sao_bernardo, carapicuiba, taboao_da_serra, cotia, itaquaquecetuba, suzano, diadema, barueri]
+    sp='https://leismunicipais.com.br/legislacao-municipal/5298/leis-de-sao-paulo/?q='
+    embu='https://leismunicipais.com.br/legislacao-municipal/4903/leis-de-embu-das-artes/?q='
+    cidades=[osasco, guarulhos, sao_bernardo, carapicuiba, taboao_da_serra, cotia, itaquaquecetuba, suzano, diadema, barueri, mogi, sp, embu]
     leis_cidades=[]
     novas_leis = []
     for cidade in cidades:
