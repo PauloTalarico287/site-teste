@@ -261,7 +261,7 @@ def coleta():
       lista_emails=['paulotbastos@hotmail.com', 'paulo@agenciamural.org.br']
       message = Mail(
         from_email='paulo@agenciamural.org.br',
-        to_emails='lista_emails'
+        to_emails= lista_emails
         subject='Confira as últimas leis sancionadas',
         html_content=f'Olá! Seguem as últimas leis e decretos publicados em cidades da Grande SP: {novos_dados.to_html(escape=False)}'
         )  
