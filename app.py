@@ -258,7 +258,7 @@ def coleta():
       novos_dados = df[df['Link'].isin(novos_links)]
       sheet_leis.append_rows(novos_dados.values.tolist())
       novos_dados['Link'] = novos_dados['Link'].apply(lambda x: f'<a href="{x}">{x}</a>')
-      lista_emails=['paulotbastos@hotmail.com', 'paulotbastos@yahoo.com.br' 'paulo@agenciamural.org.br']
+      lista_emails=['paulotbastos@hotmail.com', 'paulotbastos@yahoo.com.br', 'paulo@agenciamural.org.br']
       to_emails = ",".join(lista_emails)
       message = Mail(
         from_email='paulo@agenciamural.org.br',
