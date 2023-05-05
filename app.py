@@ -165,7 +165,7 @@ def email_telegram():
       emails.append(resposta)
   message = Mail(
     from_email='paulo@agenciamural.org.br',
-    to_emails='paulotbastos@hotmail.com', 'paulo@agenciamural.org.br',
+    to_emails='paulotbastos@hotmail.com',
     subject='Emails novos',
     html_content=f'Confira os últimos emails que vieram do Telegram{emails}:'
     )
@@ -260,7 +260,7 @@ def coleta():
       novos_dados['Link'] = novos_dados['Link'].apply(lambda x: f'<a href="{x}">{x}</a>')
       message = Mail(
         from_email='paulo@agenciamural.org.br',
-        to_emails='paulotbastos@hotmail.com',
+        to_emails='paulotbastos@hotmail.com', 'paulo@agenciamural.org.br',
         subject='Confira as últimas leis sancionadas',
         html_content=f'Olá! Seguem as últimas leis e decretos publicados em cidades da Grande SP: {novos_dados.to_html(escape=False)}'
         )  
