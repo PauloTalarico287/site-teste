@@ -165,7 +165,7 @@ def email_telegram():
       emails.append(resposta)
   message = Mail(
     from_email='paulo@agenciamural.org.br',
-    to_emails='paulotbastos@hotmail.com', 'paulo@genciamural.org.br',
+    to_emails='paulotbastos@hotmail.com', 'paulo@agenciamural.org.br',
     subject='Emails novos',
     html_content=f'Confira os últimos emails que vieram do Telegram{emails}:'
     )
