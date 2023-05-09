@@ -269,9 +269,9 @@ def coleta():
         sg = SendGridAPIClient(SENDGRID_KEY)
         response = sg.send(message)
      
-    return "Leis atualizadas"
-  else:
-    return "Já atualizamos as últimas leis"
+      return "Leis atualizadas"
+    else:
+      return "Já atualizamos as últimas leis"
         
   except Exception as e:
     print(f"Erro na coleta: {e}")
