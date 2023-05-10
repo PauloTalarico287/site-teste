@@ -263,7 +263,16 @@ def coleta():
         [To('talarico.paulo.bastos@gmail.com'),
          To('paulotbastos@hotmail.com'),
          To('paulo@agenciamural.org.br'),
-         To('paulotbastos@yahoo.com.br')],
+         To('paulotbastos@yahoo.com.br'),
+         To('annabarbosa@agenciamural.org.br'),
+         To('anderson@agenciamural.org.br'),
+         To('kalinysantoscorreia@agenciamural.org.br'),
+         To('clebersonsantos@agenciamural.org.br'),
+         To('alinealmeida@agenciamural.org.br'),
+         To('tatianearaujo@agenciamural.org.br'),
+         To('gabrielacarvalho@agenciamural.org.br'),
+         To('brunanascimento@agenciamural.org.br'),
+         To('jacquelinemaria@agenciamural.org.br')],
         subject='Confira as últimas leis sancionadas',
         html_content=f'Olá! Seguem as últimas leis e decretos publicados em cidades da Grande SP: {novos_dados.to_html(escape=False)}'
         )
