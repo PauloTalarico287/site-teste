@@ -260,7 +260,9 @@ def coleta():
       novos_dados['Link'] = novos_dados['Link'].apply(lambda x: f'<a href="{x}">{x}</a>')
       message = Mail(
         Email('paulo@agenciamural.org.br'),
-        [To('paulotbastos@hotmail.com'),
+        [To('talarico.paulo.bastos@gmail.com'),
+         To('paulotbastos@hotmail.com'),
+         To('paulo@agenciamural.org.br'),
          To('paulotbastos@yahoo.com.br')],
         subject='Confira as últimas leis sancionadas',
         html_content=f'Olá! Seguem as últimas leis e decretos publicados em cidades da Grande SP: {novos_dados.to_html(escape=False)}'
