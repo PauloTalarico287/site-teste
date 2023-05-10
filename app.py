@@ -267,11 +267,10 @@ def coleta():
           html_content=f'Olá! Seguem as últimas leis e decretos publicados em cidades da Grande SP: {novos_dados.to_html(escape=False)}'
           )
         sg = SendGridAPIClient(SENDGRID_KEY)
-        response = sg.send(message)
-     
-      return "Leis atualizadas"
-    else:
-      return "Já atualizamos as últimas leis"
+        response = sg.send(message)     
+    return "Leis atualizadas"
+  else:
+    return "Já atualizamos as últimas leis"
         
   except Exception as e:
     print(f"Erro na coleta: {e}")
