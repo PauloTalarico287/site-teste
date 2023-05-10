@@ -258,15 +258,13 @@ def coleta():
       novos_dados = df[df['Link'].isin(novos_links)]
       sheet_leis.append_rows(novos_dados.values.tolist())
       novos_dados['Link'] = novos_dados['Link'].apply(lambda x: f'<a href="{x}">{x}</a>')
-      lista_emails=['paulotbastos@hotmail.com', 'paulotbastos@yahoo.com.br', 'paulo@agenciamural.org.br', 'paulotalarico@usp.br']
-      destinatarios = ",".join(lista_emails)
-      for email in lista_emails:
-        message = Mail(
-          Email('paulo@agenciamural.org.br'),
-          to(email),
-          subject='Confira as últimas leis sancionadas',
-          html_content=f'Olá! Seguem as últimas leis e decretos publicados em cidades da Grande SP: {novos_dados.to_html(escape=False)}'
-          )
+      message = Mail(
+        Email('paulo@agenciamural.org.br'),
+        [To('paulotbastos@hotmail.com'),
+         To('paulotbastos@yahoo.com.br')],
+        subject='Confira as últimas leis sancionadas',
+        html_content=f'Olá! Seguem as últimas leis e decretos publicados em cidades da Grande SP: {novos_dados.to_html(escape=False)}'
+        )
         sg = SendGridAPIClient(SENDGRID_KEY)
         response = sg.send(message) 
              
