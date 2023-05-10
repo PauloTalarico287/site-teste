@@ -268,7 +268,7 @@ def coleta():
           html_content=f'Olá! Seguem as últimas leis e decretos publicados em cidades da Grande SP: {novos_dados.to_html(escape=False)}'
           )
         sg = SendGridAPIClient(SENDGRID_KEY)
-        response = sg.send(message)  sg = SendGridAPIClient(SENDGRID_KEY)
+        response = sg.send(message) 
              
       return "Leis atualizadas"
     else:
