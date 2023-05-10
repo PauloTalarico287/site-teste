@@ -259,19 +259,20 @@ def coleta():
       sheet_leis.append_rows(novos_dados.values.tolist())
       novos_dados['Link'] = novos_dados['Link'].apply(lambda x: f'<a href="{x}">{x}</a>')
       lista_emails=['paulotbastos@hotmail.com', 'paulotbastos@yahoo.com.br', 'paulo@agenciamural.org.br', 'paulotalarico@usp.br']
+      destinatarios = ",".join(lista_emails)
       for email in lista_emails:
         message = Mail(
           Email('paulo@agenciamural.org.br'),
-          to(email),
+          to_emails=destinatarios,
           subject='Confira as últimas leis sancionadas',
           html_content=f'Olá! Seguem as últimas leis e decretos publicados em cidades da Grande SP: {novos_dados.to_html(escape=False)}'
           )
         sg = SendGridAPIClient(SENDGRID_KEY)
         response = sg.send(message)     
-    return "Leis atualizadas"
-  else:
-    return "Já atualizamos as últimas leis"
-        
+      return "Leis atualizadas"
+    else:
+      return "Já atualizamos as últimas leis"
+
   except Exception as e:
     print(f"Erro na coleta: {e}")
     return 'Erro na coleta'
