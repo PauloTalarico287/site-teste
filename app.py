@@ -261,11 +261,11 @@ def coleta():
       lista_emails=['paulotbastos@hotmail.com', 'paulotbastos@yahoo.com.br', 'paulo@agenciamural.org.br', 'paulotalarico@usp.br']
       for email in lista_emails:
         message = Mail(
-          from_email='paulo@agenciamural.org.br',
+          Email('paulo@agenciamural.org.br'),
           to(email),
           subject='Confira as últimas leis sancionadas',
           html_content=f'Olá! Seguem as últimas leis e decretos publicados em cidades da Grande SP: {novos_dados.to_html(escape=False)}'
-        )
+          )
         sg = SendGridAPIClient(SENDGRID_KEY)
         response = sg.send(message)
      
