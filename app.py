@@ -27,8 +27,8 @@ sheet2= planilha.worksheet("Página2")
 sheet3= planilha.worksheet("Página3")
 
 #Planilhas usadas para o raspador do site da Agência Mural
-planilha2=api.open_by_key("1TW3Y4Y8XGiWtPU9dTfvaVpv_xpwCq2nY")
-sheet_novo = planilha2.worksheet("Publicações no site")
+planilha2=api.open_by_key("1eGhI8U94XP8Snoe1ALBcxnkbkPqD6fWeZoD7yB5Aabw")
+sheet_novo = planilha2.worksheet("Página1")
 
 #Planilha do Observatório de Leis
 #planilha3=api.open_by_key("1HFKm-eINHeoCkYnqsKsc1elEuSRKIh9Q8MoJbkySES4")
