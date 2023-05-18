@@ -31,8 +31,8 @@ planilha2=api.open_by_key("1TW3Y4Y8XGiWtPU9dTfvaVpv_xpwCq2nY")
 sheet_novo = planilha2.worksheet("Publicações no site")
 
 #Planilha do Observatório de Leis
-planilha3=api.open_by_key("1HFKm-eINHeoCkYnqsKsc1elEuSRKIh9Q8MoJbkySES4")
-sheet_leis = planilha3.worksheet("Página3")
+#planilha3=api.open_by_key("1HFKm-eINHeoCkYnqsKsc1elEuSRKIh9Q8MoJbkySES4")
+#sheet_leis = planilha3.worksheet("Página3")
 
 app = Flask(__name__)
 
@@ -218,71 +218,3 @@ def webstories():
       return "Nova notícia atualizada"
     else:
       return "Já atualizamos as últimas notícias"          
-  
-#3. Projeto: Observatório de Leis da Grande SP    
-@app.route("/leis")
-def coleta():
-  try:
-    mogi='https://leismunicipais.com.br/legislacao-municipal/5079/leis-de-mogi-das-cruzes?q='
-    osasco='https://leismunicipais.com.br/legislacao-municipal/5123/leis-de-osasco/?q='
-    guarulhos='https://leismunicipais.com.br/legislacao-municipal/4862/leis-de-guarulhos?q='
-    sao_bernardo='https://leismunicipais.com.br/legislacao-municipal/5280/leis-de-sao-bernardo-do-campo?q='
-    diadema='https://leismunicipais.com.br/legislacao-municipal/4888/leis-de-diadema?q='
-    barueri='https://leismunicipais.com.br/legislacao-municipal/4798/leis-de-barueri?q='
-    suzano='https://leismunicipais.com.br/legislacao-municipal/5321/leis-de-suzano?q='
-    itaquaquecetuba='https://leismunicipais.com.br/legislacao-municipal/5000/leis-de-itaquaquecetuba?q='
-    taboao_da_serra='https://leismunicipais.com.br/legislacao-municipal/5324/leis-de-taboao-da-serra?q='
-    carapicuiba='https://leismunicipais.com.br/legislacao-municipal/4855/leis-de-carapicuiba?q='
-    cotia='https://leismunicipais.com.br/legislacao-municipal/4880/leis-de-cotia?q='
-    sp='https://leismunicipais.com.br/legislacao-municipal/5298/leis-de-sao-paulo/?q='
-    embu='https://leismunicipais.com.br/legislacao-municipal/4903/leis-de-embu-das-artes/?q='
-    cidades=[osasco, guarulhos, sao_bernardo, carapicuiba, taboao_da_serra, cotia, itaquaquecetuba, suzano, diadema, barueri, mogi, sp, embu]
-    leis_cidades=[]
-    novas_leis = []
-    for cidade in cidades:
-      requisicao=requests.get(cidade)
-      html=BeautifulSoup(requisicao.content)
-      leis = html.find_all('li',{'class':'item item-result index-leismunicipais'})
-      Cidade=html.find('title').text
-      for law in leis:
-        Título = law.find('h3',{'class':'title'}).text.replace("Norma em vigor", "").strip()
-        Descrição = law.find('p',{'class':'description'}).text.strip()
-        Link = f"https://leismunicipais.com.br{law.find('a').get('href')}"
-        leis_cidades.append([Cidade, Título, Descrição, Link])
-
-    df = pd.DataFrame(leis_cidades, columns=['Cidade','Título', 'Descrição', 'Link'])
-
-    valores = sheet_leis.col_values(4)
-    novos_links = [link for link in df['Link'] if link not in valores]
-    if novos_links:
-      novos_dados = df[df['Link'].isin(novos_links)]
-      sheet_leis.append_rows(novos_dados.values.tolist())
-      novos_dados['Link'] = novos_dados['Link'].apply(lambda x: f'<a href="{x}">{x}</a>')
-      message = Mail(
-        Email('paulo@agenciamural.org.br'),
-        [To('talarico.paulo.bastos@gmail.com'),
-         To('paulotbastos@hotmail.com'),
-         To('paulo@agenciamural.org.br'),
-         To('paulotbastos@yahoo.com.br'),
-         To('annabarbosa@agenciamural.org.br'),
-         To('anderson@agenciamural.org.br'),
-         To('kalinysantoscorreia@agenciamural.org.br'),
-         To('clebersonsantos@agenciamural.org.br'),
-         To('alinealmeida@agenciamural.org.br'),
-         To('tatianearaujo@agenciamural.org.br'),
-         To('gabrielacarvalho@agenciamural.org.br'),
-         To('brunanascimento@agenciamural.org.br'),
-         To('jacquelinemaria@agenciamural.org.br')],
-        subject='Confira as últimas leis sancionadas',
-        html_content=f'Olá! Seguem as últimas leis e decretos publicados em cidades da Grande SP: {novos_dados.to_html(escape=False)}'
-        )
-      sg = SendGridAPIClient(SENDGRID_KEY)
-      response = sg.send(message) 
-             
-      return "Leis atualizadas"
-    else:
-      return "Já atualizamos as últimas leis"
-
-  except Exception as e:
-    print(f"Erro na coleta: {e}")
-    return 'Erro na coleta'
