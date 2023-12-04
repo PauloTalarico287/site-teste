@@ -176,7 +176,7 @@ def email_telegram():
 #2. Raspador do site da Agência Mural
 @app.route("/mural")
 def mural():
-    link = 'https://www.agenciamural.org.br/noticias/'
+    link = 'https://www.agenciamural.org.br/noticias/?swcfpc=1'
     requisicao = requests.get(link)
     html = BeautifulSoup(requisicao.content)
     noticias = html.find_all('div', {'class': 'texto mt-1'})
